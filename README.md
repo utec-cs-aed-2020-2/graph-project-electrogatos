@@ -6,9 +6,9 @@
 
 ## Integrantes
 
--
--
--
+-   Atachagua, James
+-   Garcia, Fernando
+-   Paniagua, Estephany
 
 ---
 
