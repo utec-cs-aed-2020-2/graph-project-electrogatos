@@ -1,25 +1,27 @@
 # Algoritmos y Estructura de Datos
+
 ## Proyecto sobre Grafos
---------
+
+---
 
 ## Integrantes
-- 
-- 
-- 
 
-----
+-
+-
+-
 
-El proyecto del curso consiste en implementar una estructura de datos de grafo y un file parser. La estructura debe soportar los métodos y algoritmos descritos a continuacion:  
+---
 
+El proyecto del curso consiste en implementar una estructura de datos de grafo y un file parser. La estructura debe soportar los métodos y algoritmos descritos a continuacion:
 
 ## Graph data structure
 
-* El grafo debe ser dinámico (inserciones. eliminaciones, búsquedas, ...)
-* Se debe implementar los dos tipos de grafos: dirigidos y no-dirigidos.
-* No considerar loops ni multi-arista. 
-
+-   El grafo debe ser dinámico (inserciones. eliminaciones, búsquedas, ...)
+-   Se debe implementar los dos tipos de grafos: dirigidos y no-dirigidos.
+-   No considerar loops ni multi-arista.
 
 ### Methods:
+
 ```cpp
 bool insertVertex(string id, V data); // Creates a new vertex in the graph with some data and an ID
 
@@ -45,6 +47,7 @@ void clear(); // Clears the graph
 ```
 
 ### Algorithms (Part 1):
+
 ```cpp
 //Given the graph
 UndirectedGraph<char, int> graph;
@@ -58,12 +61,12 @@ Prim<char, int> prim(&graph, "A");
 UndirectedGraph<char, int> result = prim.apply();//return a tree
 ```
 
-
 ## JSON file parser
-* Construye un grafo a partir de una archivo JSON de aereopuertos del mundo. 
 
+-   Construye un grafo a partir de una archivo JSON de aereopuertos del mundo.
 
 ### Methods:
+
 ```cpp
 void clear(); // Clears parser saved atributes
 
@@ -83,24 +86,23 @@ void dGraphMake(DirectedGraph<string, double> &tempGraph); // Adds the parsed da
 <body>
 ```
 
-### Allowed ```<type>``` values
+### Allowed `<type>` values
 
-* feat (new feature for the user, not a new feature for build script)
-* fix (bug fix for the user, not a fix to a build script)
-* docs (changes to the documentation)
-* style (formatting, missing semi colons, etc)
-* refactor (refactoring production code, eg. renaming a variable)
-* test (adding missing tests, refactoring tests)
-* chore (updating grunt tasks etc)
+-   feat (new feature for the user, not a new feature for build script)
+-   fix (bug fix for the user, not a fix to a build script)
+-   docs (changes to the documentation)
+-   style (formatting, missing semi colons, etc)
+-   refactor (refactoring production code, eg. renaming a variable)
+-   test (adding missing tests, refactoring tests)
+-   chore (updating grunt tasks etc)
 
-### Allowed ```<scope>``` values
+### Allowed `<scope>` values
 
-* graph
-* directedGraph
-* undirectedGraph
-* parser
-* main
-* tester
-
+-   graph
+-   directedGraph
+-   undirectedGraph
+-   parser
+-   main
+-   tester
 
 > **PD:** Puntos extras sobre Evaluación Continua si se implementa una GUI.

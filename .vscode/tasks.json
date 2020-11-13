@@ -1,0 +1,93 @@
+{
+	"version": "2.0.0",
+	"type": "shell",
+	"presentation": {
+		"echo": true,
+		"reveal": "always",
+		"focus": true,
+		"panel": "shared",
+		"showReuseMessage": true,
+		"clear": false
+	},
+	"tasks": [
+		{
+			"label": "Run",
+			"windows": {
+				"command": "${workspaceFolder}\\build\\win\\main.exe"
+			},
+			"linux": {
+				"command": "${workspaceFolder}/build/lin/main.out"
+			},
+			"osx": {
+				"command": "${workspaceFolder}/build/osx/main.out"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"dependsOn": ["Build"]
+		},
+		{
+			"label": "Build",
+			"group": "build",
+			"windows": {
+				"command": "g++",
+				"args": [
+					"--std=c++11",
+					"-g",
+					"${workspaceFolder}\\src\\main.cpp",
+					"${workspaceFolder}\\src\\Tester\\*.cpp",
+					"-o",
+					"${workspaceFolder}\\build\\win\\main.exe"
+				]
+			},
+			"osx": {
+				"command": "g++",
+				"args": [
+					"--std=c++11",
+					"-g",
+					"${workspaceFolder}/src/main.cpp",
+					"${workspaceFolder}/src/Tester/*.cpp",
+					"-o",
+					"${workspaceFolder}/build/osx/main.out"
+				]
+			},
+			"linux": {
+				"command": "g++",
+				"args": [
+					"--std=c++11",
+					"-g",
+					"${workspaceFolder}/src/main.cpp",
+					"${workspaceFolder}/src/Tester/*.cpp",
+					"-o",
+					"${workspaceFolder}/build/lin/main.out"
+				]
+			},
+			"dependsOn": ["OutDir"]
+		},
+		{
+			"label": "OutDir",
+			"group": "build",
+			"windows": {
+				"command": "mkdir",
+				"args": [
+					"${workspaceFolder}\\build\\win",
+				]
+			},
+			"osx": {
+				"command": "mkdir",
+				"args": [
+					"-p",
+					"${workspaceFolder}/build/osx",
+				]
+			},
+			"linux": {
+				"command": "mkdir",
+				"args": [
+					"-p",
+					"${workspaceFolder}/build/lin",
+				]
+			}
+		}
+	]
+}
