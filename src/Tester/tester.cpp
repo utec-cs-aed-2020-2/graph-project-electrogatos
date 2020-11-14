@@ -88,34 +88,35 @@ void Tester::executeExamples() {
 
 void Tester::executeParser() {
     // UnDirectedGraph<char, float> graph;
-    // City lima;
-    // UnDirectedGraph<City, double> cities;
-    // cities.insertVertex(lima.id, lima);
-    // cities.findById(lima.id);
+    City lima;
+    UnDirectedGraph<City, double> cities;
+    cities.insertVertex(lima.id, lima);
+    cities.findById(lima.id);
 
-    // ifstream i("airports.json");
-    // json j;
-    // i >> j;
+    ifstream i("/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
+    // ifstream i("../Parser/Data/pe.json");
+    json j;
+    i >> j;
 
-    // Airport jorgechaves, a2;
-    // UnDirectedGraph<Airport, double> airports;
+    Airport jorgechaves, a2;
+    UnDirectedGraph<Airport, double> airports;
 
-    // // se necesita cambiar ID de string a int (python3)
-    // // latitud y longitud lo mismo
-    // for (int i = 0; i < 3; i++) {
-    //     Airport a1;
-    //     a1.id = j[i]["Airport ID"];
-    //     cout << a1.id << endl;
-    //     airports.insertVertex(a1.id, a1);
-    // }
-    // // jorgechaves.id = j[0]["Airport ID"];
-    // a2.id = j[1]["Airport ID"];
-    // cout << jorgechaves.id << endl;
-    // cout << a2.id << endl;
-    // airports.insertVertex(jorgechaves.id, jorgechaves);
-    // airports.insertVertex(a2.id, a2);
-    // airports.createEdge(jorgechaves.id, a2.id, 250);
-    // airports.display(); // falta sobrecargar el operador <<
+    // se necesita cambiar ID de string a int (python3)
+    // latitud y longitud lo mismo
+    for (int i = 0; i < 3; i++) {
+        Airport a1;
+        a1.id = j[i]["Airport ID"];
+        cout << a1.id << endl;
+        airports.insertVertex(a1.id, a1);
+    }
+    jorgechaves.id = j[0]["Airport ID"];
+    a2.id = j[1]["Airport ID"];
+    cout << jorgechaves.id << endl;
+    cout << a2.id << endl;
+    airports.insertVertex(jorgechaves.id, jorgechaves);
+    airports.insertVertex(a2.id, a2);
+    airports.createEdge(jorgechaves.id, a2.id, 250);
+    // airports.display(); // falta sobrecargar el operador << para Airport y City
 }
 
 void Tester::testDeleteVertex() {}

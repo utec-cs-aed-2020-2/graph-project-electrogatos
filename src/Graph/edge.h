@@ -4,7 +4,7 @@
 #include "vertex.h"
 
 template <typename TV, typename TE>
-class Vertex;
+struct Vertex;
 
 template <typename TV, typename TE>
 struct Edge {

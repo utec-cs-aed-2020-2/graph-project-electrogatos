@@ -9,7 +9,7 @@
 using namespace std;
 
 template <typename TV, typename TE>
-class Edge;
+struct Edge;
 
 template <typename TV, typename TE>
 struct Vertex {

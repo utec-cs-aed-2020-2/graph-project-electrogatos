@@ -7,7 +7,8 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-
+#include <stdlib.h>
+#include <nlohmann/json.hpp>
 #include "json.hpp"
 
 using namespace std;
