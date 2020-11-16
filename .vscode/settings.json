@@ -45,7 +45,11 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "list": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "cstring": "cpp",
+        "forward_list": "cpp",
+        "iomanip": "cpp",
+        "valarray": "cpp"
     },
     "spellright.language": [
         "es"
