@@ -76,7 +76,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
         return true; 
     }
 
-    bool edgee(int start, int end) { 
+    bool deleteEdge(int start, int end) { 
         Vertex<TV, TE>* vertex2remove_1 = this->vertexes.at(start);
         Vertex<TV, TE>* vertex2remove_2 = this->vertexes.at(end);
         
