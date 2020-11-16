@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <vector>
 
-// #include "../Graph/directedGraph.h"
+#include "../Graph/directedGraph.h"
 #include "../Graph/undirectedGraph.h"
 #include "../Parser/parser.h"
 
