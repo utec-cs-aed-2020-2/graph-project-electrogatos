@@ -10,6 +10,9 @@
 #include "../Graph/directedGraph.h"
 #include "../Graph/undirectedGraph.h"
 #include "../Parser/parser.h"
+#include "../Graph/Algoritmos/kruskal.h"
+#include "../Graph/Algoritmos/depthfs.h"
+#include "../Graph/Algoritmos/breadthfs.h"
 
 using namespace std;
 
