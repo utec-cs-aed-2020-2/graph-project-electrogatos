@@ -17,12 +17,18 @@ struct Vertex {
     list<Edge<TV, TE>*> edges;
 
     friend ostream& operator<<(ostream& o, const Vertex<TV, TE>* objeto) {
-        o << objeto->data << ": ";
-        for (auto ver : objeto->edges) {
-            o << ver->vertexes[1]->data << "(" << ver->weight << ")"
-              << ", ";
+        if (objeto == nullptr) {
+            o << "Vertex not found!!!";
+            return o;
+        } else
+        {
+            o << objeto->data << ": ";
+            for (auto ver : objeto->edges) {
+                o << ver->vertexes[1]->data << "(" << ver->weight << ")"
+                << ", ";
+            }
+            return o;
         }
-        return o;
     }
 };
 
