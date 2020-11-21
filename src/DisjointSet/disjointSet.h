@@ -118,27 +118,27 @@ class DisjoinSet {
         cout << "-------PRINTSETS-------" << endl;
         cout << "Total Sets: " << sets() << endl;
 
-        cout << "Index:  " << setw(2);
+        cout << "Index:  " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << i << setw(2);
+            cout << i << setw(10);
         }
         cout << endl;
 
-        cout << "Data:   " << setw(2);
+        cout << "Data:   " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << this->dat[i] << setw(2);
+            cout << this->dat[i] << setw(10);
         }
         cout << endl;
 
-        cout << "Parent: " << setw(2);
+        cout << "Parent: " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << this->parent[i] << setw(2);
+            cout << this->parent[i] << setw(10);
         }
         cout << endl;
 
-        cout << "Rank:   " << setw(2);
+        cout << "Rank:   " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << this->rank[i] << setw(2);
+            cout << this->rank[i] << setw(10);
         }
         cout << endl;
         cout << "-----------------------" << endl;
