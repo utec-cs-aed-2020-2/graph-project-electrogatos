@@ -34,3 +34,5 @@
 # Output folder
 build/
 build/*
+src/Graph/undirectedGraph.h.bk
+src/Tester/tester.cpp.bk
