@@ -2,6 +2,7 @@
 #define UNDIRECTEDGRAPH_H
 
 #include "graph.h"
+
 using namespace std;
 
 template <typename TV, typename TE>
@@ -15,11 +16,15 @@ class UnDirectedGraph : public Graph<TV, TE> {
    public:
     bool insertVertex(int id, TV vertex) {
         // this->vertexes.insert(make_pair(id, vertex));
-        Vertex<TV, TE>* v = new Vertex<TV, TE>();
-        v->data = vertex;
-        this->vertexes[id] = v;
-
-        return true;
+        if (!findById(id)) {
+            Vertex<TV, TE>* v = new Vertex<TV, TE>();
+            v->data = vertex;
+            this->vertexes[id] = v;
+            return true;
+        } else {
+            cout << "Ya existe el vertice" << endl;
+            return false;
+        }
     }
 
     bool createEdge(int id1, int id2, TE w) {
@@ -27,81 +32,108 @@ class UnDirectedGraph : public Graph<TV, TE> {
         Vertex<TV, TE>* v1 = this->vertexes.at(id1);
         Vertex<TV, TE>* v2 = this->vertexes.at(id2);
 
-        // Se añade un nuevo edge al vertices con id1
-        Edge<TV, TE>* e = new Edge<TV, TE>();
-        e->weight = w;
-        e->vertexes[0] = v1;
-        e->vertexes[1] = v2;
-        v1->edges.push_back(e);
-        // v1->edges.sort(compare_nocase);
+        if (!searchEdge(id1, id2)) {
+            // Se añade un nuevo edge al vertices con id1
+            Edge<TV, TE>* e = new Edge<TV, TE>();
+            e->weight = w;
+            e->vertexes[0] = v1;
+            e->vertexes[1] = v2;
+            v1->edges.push_back(e);
+            // v1->edges.sort(compare_nocase);
 
-        // Se añade a la lista de aristas del grafo
-        this->graphedges.push_front(e);
+            // Se añade a la lista de aristas del grafo
+            this->graphedges.push_front(e);
 
-        // Se añade un nuevo edge al vertices con id2
-        Edge<TV, TE>* e2 = new Edge<TV, TE>();
-        e2->weight = w;
-        e2->vertexes[0] = v2;
-        e2->vertexes[1] = v1;
-        v2->edges.push_back(e2);
-        // v2->edges.sort(compare_nocase);
-        return true;
+            // Se añade un nuevo edge al vertices con id2
+            Edge<TV, TE>* e2 = new Edge<TV, TE>();
+            e2->weight = w;
+            e2->vertexes[0] = v2;
+            e2->vertexes[1] = v1;
+            v2->edges.push_back(e2);
+            // v2->edges.sort(compare_nocase);
+            return true;
+        } else {
+            cout << "Ya existe el Edge" << endl;
+            return false;
+        }
+        
+        
     }
 
     bool deleteVertex(int id) {
-        Vertex<TV, TE>* vertex2remove = this->vertexes.at(id);
-        // cout << "Data: " << vertex2remove->data << endl;
-        
-        /* Por cada arista del vertex(id) hay que eliminar la union del otro vertex */
-        Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
-        for (auto edge : vertex2remove->edges) {
-            // cout << "Vertex->: " << edge->vertexes[1]->data << endl;
-            // Se elimina el sentido contrario de la arista
-            for (auto EdgeOfVertex : edge->vertexes[1]->edges){
-                if (EdgeOfVertex->vertexes[1] == vertex2remove){
-                    // cout << "Vertex1 of edge->: " << EdgeOfVertex->vertexes[1]->data << endl;
-                    edge2remove = EdgeOfVertex;
+        if (findById(id)) {
+            Vertex<TV, TE>* vertex2remove = this->vertexes.at(id);
+            // cout << "Data: " << vertex2remove->data << endl;
+            
+            /* Por cada arista del vertex(id) hay que eliminar la union del otro vertex */
+            Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
+            for (auto edge : vertex2remove->edges) {
+                // cout << "Vertex->: " << edge->vertexes[1]->data << endl;
+                // Se elimina el sentido contrario de la arista
+                for (auto EdgeOfVertex : edge->vertexes[1]->edges){
+                    if (EdgeOfVertex->vertexes[1] == vertex2remove){
+                        // cout << "Vertex1 of edge->: " << EdgeOfVertex->vertexes[1]->data << endl;
+                        edge2remove = EdgeOfVertex;
+                    }
                 }
-            }
-            // se elimina el edge en la lista para kruskal
+                // se elimina el edge en la lista para kruskal
+                this->graphedges.remove(edge); 
             this->graphedges.remove(edge); 
+                this->graphedges.remove(edge); 
+                this->graphedges.remove(edge2remove); 
             this->graphedges.remove(edge2remove); 
-            // se elemina el edge en la propia lista de edges del vertice
-            edge->vertexes[1]->edges.remove(edge2remove);
-        }
-        
-        /* Crear el destructor de Vertex */
+                this->graphedges.remove(edge2remove); 
+                // se elemina el edge en la propia lista de edges del vertice
+                edge->vertexes[1]->edges.remove(edge2remove);
+            }
+            
+            /* Crear el destructor de Vertex */
+            this->vertexes.erase(id);  
         this->vertexes.erase(id);
-
+            this->vertexes.erase(id);  
+            return true;  
         return true; 
+            return true;  
+        } else {
+            cout << "Can not delete vertex " << id << endl; 
+            return false; 
+        }
     }
 
     bool deleteEdge(int start, int end) { 
-        Vertex<TV, TE>* vertex2remove_1 = this->vertexes.at(start);
-        Vertex<TV, TE>* vertex2remove_2 = this->vertexes.at(end);
-        
-        Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
+        if (searchEdge(start, end)) { 
+            Vertex<TV, TE>* vertex2remove_1 = this->vertexes.at(start);
+            Vertex<TV, TE>* vertex2remove_2 = this->vertexes.at(end);
 
-        // delete start -> end
-        for (auto edge : vertex2remove_1->edges){
-            if (edge->vertexes[1] == vertex2remove_2) {
-                edge2remove = edge;
+            Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
+
+            // delete start -> end
+            for (auto edge : vertex2remove_1->edges){
+                if (edge->vertexes[1] == vertex2remove_2) {
+                    edge2remove = edge;
+                }
             }
-        }
-        vertex2remove_1->edges.remove(edge2remove);
-        // se elimina el edge en la lista para kruskal
+            vertex2remove_1->edges.remove(edge2remove);
+            // se elimina el edge en la lista para kruskal
+            this->graphedges.remove(edge2remove); 
         this->graphedges.remove(edge2remove); 
+            this->graphedges.remove(edge2remove); 
 
-        // delete end -> start
-        edge2remove = nullptr;
-        for (auto edge : vertex2remove_2->edges){
-            if (edge->vertexes[1] == vertex2remove_1) {
-                edge2remove = edge;
+            // delete end -> start
+            edge2remove = nullptr;
+            for (auto edge : vertex2remove_2->edges){
+                if (edge->vertexes[1] == vertex2remove_1) {
+                    edge2remove = edge;
+                }
             }
-        }
-        vertex2remove_2->edges.remove(edge2remove);
-
+            vertex2remove_2->edges.remove(edge2remove);
+            return true; 
         return true; 
+            return true; 
+        } else {
+            cout << "Can not delete edge " << start << "->" << end << endl; 
+            return false;
+        }
     }
 
     float density() { 
@@ -122,34 +154,18 @@ class UnDirectedGraph : public Graph<TV, TE> {
     }
 
     // saber si el grafo es conexo, se puede usar disjoin set (si existen 2 DS es no conexo)
-    bool isConnected() {
-        // vector<char> data; // Vector para guardar vértices y crear DisjointSet
-        // // Se llena data y el MST Graph
-        // for (auto x : this->vertexes){
-        //     data.push_back(x.second->data);
-        // }
-        // // Se crea un DisjointSet con los vértices del árbol
-        // DisjoinSet<char>* dsc = new DisjoinSet<char>(data);
-        // dsc->MakeSet();
+    bool isConnected() { // Need to fix
+        // Kruskal<TV, TE> kruskal(this);
+        // Graph<TV, TE> mst = kruskal.apply();
+        // this->total_sets = mst->total_sets;
 
-        // // Por cada arista en el árbol se aplica una union si es el caso
-        // for (auto edge_ : this->graphedges){
-        //     int x = dsc->Find(findByVertex(edge_->vertexes[0])); //el mismo vertice
-        //     int y = dsc->Find(findByVertex(edge_->vertexes[1])); //el destino
-
-        //     // Si tienen diferente parent se realiza la union
-        //     if (x != y) {
-        //         // Se agrega el vértice al DisjointSet
-        //         dsc->Union(x, y);
-        //     }
-        // }
-        // // ds->printSets();
-
-        // Si el DisjointSet posee mas de 1 set quiere decir que el grafo es no conexo
-        // Si ya se corrio Kruskal se puede obtener del mismo disjoint set
-        int sets = this->dsgraph->sets();
-
-        return sets <= 1;
+        cout << this->total_sets << endl;
+        if (this->total_sets == -1){
+            cout << "Kruskal not executed" << endl;
+            return false;
+        } else {
+            return this->total_sets <= 1;
+        }
     };
 
     bool isStronglyConnected() { 
@@ -170,8 +186,13 @@ class UnDirectedGraph : public Graph<TV, TE> {
     void clear() {}
 
     Vertex<TV, TE>* displayVertex(int id) {
-        Vertex<TV, TE>* v = this->vertexes.at(id);
-        return v;
+        try { 
+            Vertex<TV, TE>* v = this->vertexes.at(id);
+            return v;
+        } catch(const out_of_range &e) {
+            // cout << "Vertex not found!!!" << endl;
+            return nullptr;
+        }
     };
 
     /* Funcion para determinar si existe el vértice en el árbol por id */
@@ -205,130 +226,31 @@ class UnDirectedGraph : public Graph<TV, TE> {
         return -1;
     }    
 
-    /* Función para hallar el Minimun Spanning Tree */
-    UnDirectedGraph<TV, TE> execKruskal() {
-        UnDirectedGraph<TV, TE> BFSGraph;  // MST Graph
-        vector<char> data;                 // Vector para guardar vértices y crear DisjointSet
-
-        // Se llena data y el MST Graph
-        for (auto x : this->vertexes) {
-            data.push_back(x.second->data);
-            BFSGraph.insertVertex(x.first, x.second->data);
-        }
-        // Se ordena las aristas de menor a mayor
-        this->graphedges.sort(compare_nocase);
-        // Se crea un DisjointSet con los vértices del árbol
-        DisjoinSet<char>* ds = new DisjoinSet<char>(data);
-        ds->MakeSet();
-
-        // Por cada arista en el árbol se aplica una union si es el caso
+    bool searchEdge(int id1, int id2) {
+        // Se obtienen los vertices de la lista vertexes
+        Vertex<TV, TE>* v1 = this->vertexes.at(id1);
+        Vertex<TV, TE>* v2 = this->vertexes.at(id2);
+        // cout << "Finding..."<< endl;
         for (auto edges_ : this->graphedges) {
-            // cout << edges_->vertexes[0]->data << " -> " << edges_->vertexes[1]->data << endl;
-            Edge<TV, TE>* next_edge = edges_;
-
-            int x = ds->Find(findByVertex(next_edge->vertexes[0]));  // el mismo vertice
-            int y = ds->Find(findByVertex(next_edge->vertexes[1]));  // el destino
-
-            // Si tienen diferente parent se realiza la union
-            if (x != y) {
-                ds->Union(x, y);
-                // Se agrega la solución al MST Graph
-                BFSGraph.createEdge(findByVertex(next_edge->vertexes[0]),
-                                    findByVertex(next_edge->vertexes[1]), next_edge->weight);
+            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) || ( (edges_->vertexes[1]->data == v1->data) && (edges_->vertexes[0]->data == v2->data) ) ) {
+                return true;
             }
+            // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
         }
-        // ds->printSets();
-        // cout << endl;
-        this->dsgraph = ds;
-        return BFSGraph;
+        return false;
     };
 
-    /* Prim: https://www.geeksforgeeks.org/prims-algorithm-using-priority_queue-stl/ */
-
-    /* Función para realizar la busqueda en profundidad */
-    UnDirectedGraph<TV, TE> execDFS() {
-        UnDirectedGraph<TV, TE> BFSGraph;
-        unordered_map<Vertex<TV, TE>*, bool> visited;
-
-        // Se coloca todos los vértices como no visitados
+    /* Funcion para mostrar cada vértice del arbol con sus respectivas aristas */
+    void displaybyID() {
         for (auto x : this->vertexes) {
-            visited[x.second] = false;
-            // Inserta el vértice con su ID al nuevo grafo
-            BFSGraph.insertVertex(x.first, x.second->data);
-        }
-
-        // Para cada vértice en el árbol
-        for (auto itr_new : this->vertexes) {
-            if (!visited[itr_new.second]) {
-                stack<Vertex<TV, TE>*> stack;
-                // Se coloca el vértice actual como visitado y se coloca en la pila
-                visited[itr_new.second] = true;
-                stack.push(itr_new.second);
-
-                while (!stack.empty()) {
-                    // Se saca de la pila el vértice
-                    Vertex<TV, TE>* v = stack.top();
-                    stack.pop();
-                    // Para cada vértice adyacente de v
-                    //--> si no ha sido visitado se marca como visitado y se coloca en la pila
-                    for (auto edg : v->edges) {
-                        // visited[edg->vertexes[1]] << endl;
-                        if (!visited[edg->vertexes[1]]) {
-                            visited[edg->vertexes[1]] = true;
-                            stack.push(edg->vertexes[1]);
-                            // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
-                            BFSGraph.createEdge(findByVertex(edg->vertexes[0]),
-                                                findByVertex(edg->vertexes[1]), 1);
-                        }
-                    }
-                }
+            Vertex<TV, TE>* tmp = x.second;
+            std::cout << tmp->data << ": ";
+            for (auto ver : tmp->edges) {
+                std::cout << ver->vertexes[1]->data << "(" << ver->weight << ")"
+                          << ", ";
             }
+            std::cout << std::endl;
         }
-        return BFSGraph;
-    };
-
-    /* Función para realizar la busqueda en anchura */
-    UnDirectedGraph<TV, TE> execBFS() {
-        UnDirectedGraph<TV, TE> BFSGraph;
-        unordered_map<Vertex<TV, TE>*, bool> visited;
-
-        typename unordered_map<int, Vertex<TV, TE>*>::iterator itr;
-        for (itr = this->vertexes.begin(); itr != this->vertexes.end(); itr++) {
-            // Se marca todos los vértices como no visitados
-            visited[itr->second] = false;
-            // Inserta el vértice con su ID al nuevo grafo
-            BFSGraph.insertVertex(itr->first, itr->second->data);
-        }
-
-        // Para cada vértice en el árbol
-        for (auto itr_new : this->vertexes) {
-            if (!visited[itr_new.second]) {
-                // Create a queue of Vertex
-                queue<Vertex<TV, TE>*> queue;
-                // Se coloca el vértice actual como visitado y se encola
-                visited[itr_new.second] = true;
-                queue.push(itr_new.second);
-
-                while (!queue.empty()) {
-                    Vertex<TV, TE>* v = queue.front();
-                    queue.pop();
-
-                    // Para cada vértice adyacente de v
-                    //--> si no ha sido visitado se marca como visitado y encola
-                    for (auto edg : v->edges) {
-                        if (!visited[edg->vertexes[1]]) {
-                            visited[edg->vertexes[1]] = true;
-                            queue.push(edg->vertexes[1]);
-                            // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
-                            BFSGraph.createEdge(findByVertex(edg->vertexes[0]),
-                                                findByVertex(edg->vertexes[1]), 1);
-                        }
-                    }
-                }
-            }
-        }
-        // cout << endl;
-        return BFSGraph;
     };
 
 };
