@@ -15,10 +15,11 @@ using namespace std;
 
 template <typename TV, typename TE>
 class Graph {
-   protected:
+   public:
     unordered_map<int, Vertex<TV, TE>*> vertexes;
     list<Edge<TV, TE>*> graphedges;
-    DisjoinSet<char>* dsgraph;
+    // DisjoinSet<string>* dsgraph;
+    int total_sets = -1;
 
    public: // need to be virtual??? 
     bool insertVertex(int id, TV vertex);
