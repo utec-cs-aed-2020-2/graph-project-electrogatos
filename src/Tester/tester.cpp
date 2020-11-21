@@ -36,42 +36,24 @@ void Tester::executeExamples() {
 }
 
 void Tester::executeParser() {
-    // // UnDirectedGraph<char, float> graph;
-    // City lima;
-    // UnDirectedGraph<City, double> cities;
-    // cities.insertVertex(lima.id, lima);
-    // cities.findById(lima.id);
-
-    // ifstream i("/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
-    // // ifstream i("../Parser/Data/pe.json");
-    // json j;
-    // i >> j;
-
-    // Airport jorgechaves, a2;
-    // UnDirectedGraph<Airport, double> airports;
-
-    // // se necesita cambiar ID de string a int (python3)
-    // // latitud y longitud lo mismo
-    // for (int i = 0; i < 3; i++) {
-    //     Airport a1;
-    //     a1.id = j[i]["Airport ID"];
-    //     cout << a1.id << endl;
-    //     airports.insertVertex(a1.id, a1);
-    // }
-    // jorgechaves.id = j[0]["Airport ID"];
-    // a2.id = j[1]["Airport ID"];
-    // cout << jorgechaves.id << endl;
-    // cout << a2.id << endl;
-    // airports.insertVertex(jorgechaves.id, jorgechaves);
-    // airports.insertVertex(a2.id, a2);
-    // airports.createEdge(jorgechaves.id, a2.id, 250);
-    // // airports.display(); // falta sobrecargar el operador << para Airport y City
-
     cout << "Test Parser" << endl;
     AirportParser airportsparse("/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
     UnDirectedGraph<string, double> airports;
     airportsparse.uGraphMake(airports);
+    cout << endl;
+    cout << "\nDisplay unDirected Graph\n";
     airports.display();
+
+    cout << "\nfindById(6067 - Huanuco): " << std::boolalpha << airports.findById(6067) << endl;
+
+    cout << "\ndisplayVertex(6067 - Huanuco)\n";
+    cout << airports.displayVertex(6067) << endl;
+
+    // cout << "\nexecKruskal()\n";
+    // UnDirectedGraph<string, double> mst = airports.execKruskal();
+    // mst.display();
+
+    // cout << "isConnected(): " << std::boolalpha << airports.isConnected() << endl;
 }
 
 void Tester::testDeleteVertex() {}
@@ -135,7 +117,7 @@ void testDirectGraph() {
 
     cout << "isStronglyConnected(): " << std::boolalpha << graph.isStronglyConnected() << endl;
 
-    cout << "\nDelete Vertex id: 2 (B)\n";
+    cout << "\nDelete Vertex id: 7 (B)\n";
     graph.deleteVertex(7);
     graph.display();
 
@@ -145,20 +127,22 @@ void testDirectGraph() {
 }
 
 void testUnDirectGraph() {
-    UnDirectedGraph<char, float> graph;
-    graph.insertVertex(1, 'J');
-    graph.insertVertex(2, 'F');
-    graph.insertVertex(3, 'C');
-    graph.insertVertex(4, 'D');
-    graph.insertVertex(5, 'A');
-    graph.insertVertex(6, 'H');
-    graph.insertVertex(7, 'B');
-    graph.insertVertex(8, 'E');
-    graph.insertVertex(9, 'G');
-    graph.insertVertex(10, 'I');
+    UnDirectedGraph<string, float> graph;
+    graph.insertVertex(1, "J");
+    graph.insertVertex(2, "F");
+    graph.insertVertex(3, "C");
+    graph.insertVertex(4, "D");
+    graph.insertVertex(5, "A");
+    graph.insertVertex(6, "H");
+    graph.insertVertex(7, "B");
+    graph.insertVertex(8, "E");
+    graph.insertVertex(9, "G");
+    graph.insertVertex(10, "I");
 
     graph.createEdge(1, 2, 4);    // J - F | 4
     graph.createEdge(2, 3, 7);    // F - C | 7
+    graph.createEdge(1, 3, 10);    // F - C | 7
+    // graph.createEdge(3, 2, 10);    // C - F | 7 // Test to existe edge
     graph.createEdge(3, 4, 11);   // C - D | 11
     graph.createEdge(2, 4, 58);   // F - D | 58
     graph.createEdge(2, 5, 17);   // F - A | 17
@@ -195,20 +179,26 @@ void testUnDirectGraph() {
     cout << graph.displayVertex(6) << endl;
 
     cout << "\nexecKruskal()\n";
-    UnDirectedGraph<char, float> mst = graph.execKruskal();
+    Kruskal<string, float> kruskal(graph);
+    UnDirectedGraph<string, float> mst = kruskal.apply();
+    // UnDirectedGraph<string, float> mst = graph.execKruskal();
     mst.display();
 
-    // cout << "\nexecDFS()\n";
+    cout << "\nexecDFS()\n";
+    DFS<string, float> DFS(graph);
+    UnDirectedGraph<string, float> dsf = DFS.apply();
     // UnDirectedGraph<char, float> dsf = graph.execDFS();
-    // dsf.display();
+    dsf.display();
 
-    // cout << "\nexecBFS()\n";
+    cout << "\nexecBFS()\n";
+    BFS<string, float> BFS(graph);
+    UnDirectedGraph<string, float> bfs = BFS.apply();
     // UnDirectedGraph<char, float> bfs = graph.execBFS();
-    // bfs.display();
+    bfs.display();
 
-    cout << "isConnected(): " << std::boolalpha << graph.isConnected() << endl;
+    cout << "\nisConnected(): " << std::boolalpha << graph.isConnected() << endl;
 
-    cout << "\nDelete Vertex id: 2 (B)\n";
+    cout << "\nDelete Vertex id: 7 (B)\n";
     graph.deleteVertex(7);
     graph.display();
 
