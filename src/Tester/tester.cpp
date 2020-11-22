@@ -5,11 +5,15 @@ void testDirectGraph();
 void testUnDirectGraph();
 
 void Tester::executeExamples() {
+    cout << "================================================" << endl;
     cout << "Test UnDirected Graph" << endl;
+    cout << "================================================" << endl;
     testUnDirectGraph();
     cout << endl;
 
+    cout << "================================================" << endl;
     cout << "Test Directed Graph" << endl;
+    cout << "================================================" << endl;
     testDirectGraph();
     cout << endl;
 
@@ -32,11 +36,14 @@ void Tester::executeExamples() {
     //     testKruskal();
     //     testPrim();
     //     cout << "All tests passed" << endl;
-    // }
+    // }   
 }
 
 void Tester::executeParser() {
+    cout << "================================================" << endl;
     cout << "Test Parser" << endl;
+    cout << "================================================" << endl;
+
     AirportParser airportsparse("/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
     UnDirectedGraph<string, double> airports;
     airportsparse.uGraphMake(airports);
@@ -49,20 +56,45 @@ void Tester::executeParser() {
     cout << "\ndisplayVertex(6067 - Huanuco)\n";
     cout << airports.displayVertex(6067) << endl;
 
-    // cout << "\nexecKruskal()\n";
-    // UnDirectedGraph<string, double> mst = airports.execKruskal();
-    // mst.display();
+    cout << "\nexecKruskal()\n";
+    Kruskal<string, double> kruskal(airports);
+    UnDirectedGraph<string, double> mst = kruskal.apply();
+    mst.display();
 
-    // cout << "isConnected(): " << std::boolalpha << airports.isConnected() << endl;
+    cout << "\nisConnected(): " << std::boolalpha << airports.isConnected() << endl;
+
+    cout << "\nexecPrim()\n";
+    Prim<string, double> Prim(airports, "2789");
+    UnDirectedGraph<string, double> mstp = Prim.apply();
+    mstp.display();
+
+    cout << "\nexecDFS()\n";
+    DFS<string, double> DFS(airports);
+    UnDirectedGraph<string, double> dsf = DFS.apply();
+    // UnDirectedGraph<char, float> dsf = graph.execDFS();
+    dsf.display();
+
+    cout << "\nexecBFS()\n";
+    BFS<string, double> BFS(airports);
+    UnDirectedGraph<string, double> bfs = BFS.apply();
+    // UnDirectedGraph<char, float> bfs = graph.execBFS();
+    bfs.display();
+
+    cout << "\nDensity: \n";
+    cout << airports.density();
+    
+    cout << "\nisDense(): " << std::boolalpha << airports.isDense() << endl;
+
+    cout << "\nempty(): " << std::boolalpha << airports.empty() << endl;
+
+    cout << "\nDelete Vertex id: 2789 (Lima)\n";
+    airports.deleteVertex(2789);
+    airports.display();
+
+    cout << "\nDelete Edge Pucallpa - Iquitos \n";
+    airports.deleteEdge(2781, 2801);
+    airports.display();
 }
-
-void Tester::testDeleteVertex() {}
-void Tester::testDeleteEdge() {}
-void Tester::testDensity() {}
-void Tester::testConnected() {}
-void Tester::testStronglyConnected() {}
-void Tester::testKruskal() {}
-void Tester::testPrim() {}
 
 /* First Testes */
 void testDirectGraph() {
@@ -124,85 +156,101 @@ void testDirectGraph() {
     cout << "\nDelete Edge I - G \n";
     graph.deleteEdge(10, 9);
     graph.display();
+
+    cout << "\nDensity: \n";
+    cout << graph.density();
+    
+    cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
+
+    cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
 }
 
 void testUnDirectGraph() {
+
+    // // PPT Grafos Kruskal and Prim ejm
+    //      1
+    //  0 ------ 1 \-
+    //  |      / |   \1
+    // 6|   4/   |3   - 4 
+    //  |  /     |   /1
+    //   2 ----- 3 /
+    //      1
     UnDirectedGraph<string, float> graph;
-    graph.insertVertex(1, "J");
-    graph.insertVertex(2, "F");
-    graph.insertVertex(3, "C");
-    graph.insertVertex(4, "D");
-    graph.insertVertex(5, "A");
-    graph.insertVertex(6, "H");
-    graph.insertVertex(7, "B");
-    graph.insertVertex(8, "E");
-    graph.insertVertex(9, "G");
-    graph.insertVertex(10, "I");
-
-    graph.createEdge(1, 2, 4);    // J - F | 4
-    graph.createEdge(2, 3, 7);    // F - C | 7
-    graph.createEdge(1, 3, 10);    // F - C | 7
-    // graph.createEdge(3, 2, 10);    // C - F | 7 // Test to existe edge
-    graph.createEdge(3, 4, 11);   // C - D | 11
-    graph.createEdge(2, 4, 58);   // F - D | 58
-    graph.createEdge(2, 5, 17);   // F - A | 17
-    graph.createEdge(1, 5, 14);   // J - A | 14
-    graph.createEdge(3, 6, 24);   // C - H | 24
-    graph.createEdge(4, 5, 42);   // D - A | 42
-    graph.createEdge(1, 8, 5);    // J - E | 5
-    graph.createEdge(4, 6, 26);   // D - H | 26
-    graph.createEdge(4, 7, 19);   // D - B | 19
-    graph.createEdge(5, 7, 5);    // A - B | 5
-    graph.createEdge(5, 8, 11);   // A - E | 11
-    graph.createEdge(6, 7, 64);   // H - B | 64
-    graph.createEdge(8, 10, 29);  // E - I | 29
-    graph.createEdge(6, 9, 3);    // H - G | 3
-    graph.createEdge(7, 9, 52);   // B - G | 52
-    graph.createEdge(7, 10, 51);  // B - I | 51
-    graph.createEdge(10, 9, 33);  // I - G | 33
-
+    graph.insertVertex(1, "0");
+    graph.insertVertex(2, "1");
+    graph.insertVertex(3, "2");
+    graph.insertVertex(4, "3");
+    graph.insertVertex(5, "4");
+    graph.createEdge(1, 3, 6); // 0 - 2 | 6
+    graph.createEdge(1, 2, 1); // 0 - 1 | 1
+    graph.createEdge(3, 2, 4); // 2 - 1 | 4
+    graph.createEdge(3, 4, 1); // 2 - 3 | 1
+    graph.createEdge(2, 4, 3); // 1 - 3 | 3
+    graph.createEdge(2, 5, 1); // 1 - 4 | 1
+    graph.createEdge(4, 5, 1); // 3 - 4 | 1
+    
     // display as adjacency list
     /*
-     E:  I(29), J(5), A(11)
-     J:  A(14), F(4)
+     4: 1(1), 3(1), 
+     3: 2(1), 1(3), 4(1), 
+     2: 0(6), 1(4), 3(1), 
+     1: 0(1), 2(4), 3(3), 4(1), 
+     0: 2(6), 1(1), 
     */
     graph.display();
 
     // True, False
-    cout << "\nfindById(6): " << std::boolalpha << graph.findById(6) << endl;
+    cout << "\nfindById(3): " << std::boolalpha << graph.findById(3) << endl;
 
     // display object
     /*
-     E:  I(29), J(5), A(11)
+     2: 0(6), 1(4), 3(1)
     */
-    cout << "\ndisplayVertex(6)\n";
-    cout << graph.displayVertex(6) << endl;
+    cout << "\ndisplayVertex(3)\n";
+    cout << graph.displayVertex(3) << endl;
 
+    // For Prim and Kruskal
+    /*
+     0: 1(1), 
+     1: 4(1), 0(1), 
+     2: 3(1), 
+     3: 2(1), 4(1), 
+     4: 3(1), 1(1), 
+    */
     cout << "\nexecKruskal()\n";
     Kruskal<string, float> kruskal(graph);
-    UnDirectedGraph<string, float> mst = kruskal.apply();
-    // UnDirectedGraph<string, float> mst = graph.execKruskal();
-    mst.display();
+    UnDirectedGraph<string, float> mstk = kruskal.apply();
+    mstk.display();
+
+    cout << "\nexecPrim()\n";
+    Prim<string, float> Prim(graph, "0");
+    UnDirectedGraph<string, float> mstp = Prim.apply();
+    mstp.display();
 
     cout << "\nexecDFS()\n";
     DFS<string, float> DFS(graph);
     UnDirectedGraph<string, float> dsf = DFS.apply();
-    // UnDirectedGraph<char, float> dsf = graph.execDFS();
     dsf.display();
 
     cout << "\nexecBFS()\n";
     BFS<string, float> BFS(graph);
     UnDirectedGraph<string, float> bfs = BFS.apply();
-    // UnDirectedGraph<char, float> bfs = graph.execBFS();
     bfs.display();
 
     cout << "\nisConnected(): " << std::boolalpha << graph.isConnected() << endl;
 
-    cout << "\nDelete Vertex id: 7 (B)\n";
-    graph.deleteVertex(7);
+    cout << "\nDensity: \n";
+    cout << graph.density();
+    
+    cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
+
+    cout << "\nDelete Vertex id: 5 (4)\n";
+    graph.deleteVertex(5);
     graph.display();
 
-    cout << "\nDelete Edge I - G \n";
-    graph.deleteEdge(10, 9);
+    cout << "\nDelete Edge 2 - 1 \n";
+    graph.deleteEdge(3, 2);
     graph.display();
+
+    cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
 }
