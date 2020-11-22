@@ -78,11 +78,8 @@ class UnDirectedGraph : public Graph<TV, TE> {
                 }
                 // se elimina el edge en la lista para kruskal
                 this->graphedges.remove(edge); 
-            this->graphedges.remove(edge); 
-                this->graphedges.remove(edge); 
                 this->graphedges.remove(edge2remove); 
-            this->graphedges.remove(edge2remove); 
-                this->graphedges.remove(edge2remove); 
+
                 // se elemina el edge en la propia lista de edges del vertice
                 edge->vertexes[1]->edges.remove(edge2remove);
             }
@@ -116,8 +113,6 @@ class UnDirectedGraph : public Graph<TV, TE> {
             vertex2remove_1->edges.remove(edge2remove);
             // se elimina el edge en la lista para kruskal
             this->graphedges.remove(edge2remove); 
-        this->graphedges.remove(edge2remove); 
-            this->graphedges.remove(edge2remove); 
 
             // delete end -> start
             edge2remove = nullptr;
@@ -127,8 +122,6 @@ class UnDirectedGraph : public Graph<TV, TE> {
                 }
             }
             vertex2remove_2->edges.remove(edge2remove);
-            return true; 
-        return true; 
             return true; 
         } else {
             cout << "Can not delete edge " << start << "->" << end << endl; 
@@ -141,7 +134,11 @@ class UnDirectedGraph : public Graph<TV, TE> {
             // throw "The graph is empty";
             return 0.0;
         } else {
-            return ( 2 * this->graphedges.size() ) / ( this->vertexes.size() * ( this->vertexes.size() - 1 ) );
+            // cout << this->graphedges.size() << " " << this->vertexes.size() << endl;
+            float a = 2 * this->graphedges.size();
+            float b = this->vertexes.size() * ( this->vertexes.size() - 1 );
+            // cout << a << " " << b << endl;
+            return a/b;
         }
     }
 
@@ -155,11 +152,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
 
     // saber si el grafo es conexo, se puede usar disjoin set (si existen 2 DS es no conexo)
     bool isConnected() { // Need to fix
-        // Kruskal<TV, TE> kruskal(this);
-        // Graph<TV, TE> mst = kruskal.apply();
-        // this->total_sets = mst->total_sets;
-
-        cout << this->total_sets << endl;
+        // cout << this->total_sets << endl;
         if (this->total_sets == -1){
             cout << "Kruskal not executed" << endl;
             return false;
@@ -226,6 +219,15 @@ class UnDirectedGraph : public Graph<TV, TE> {
         return -1;
     }    
 
+    /* Funcion para determinar si existe el vértice en el árbol por el mismo vértice */
+    Vertex<TV, TE>* findByData(TV data) {
+        typename unordered_map<int, Vertex<TV, TE>*>::iterator itr;
+        for (itr = this->vertexes.begin(); itr != this->vertexes.end(); itr++) {
+            if (itr->second->data == data) return itr->second;
+        }
+        return nullptr;
+    }    
+
     bool searchEdge(int id1, int id2) {
         // Se obtienen los vertices de la lista vertexes
         Vertex<TV, TE>* v1 = this->vertexes.at(id1);
@@ -238,6 +240,20 @@ class UnDirectedGraph : public Graph<TV, TE> {
             // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
         }
         return false;
+    };
+
+    TE getweigthEdge(int id1, int id2) {
+        // Se obtienen los vertices de la lista vertexes
+        Vertex<TV, TE>* v1 = this->vertexes.at(id1);
+        Vertex<TV, TE>* v2 = this->vertexes.at(id2);
+        // cout << "Finding..."<< endl;
+        for (auto edges_ : this->graphedges) {
+            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) || ( (edges_->vertexes[1]->data == v1->data) && (edges_->vertexes[0]->data == v2->data) ) ) {
+                return edges_->weight;
+            }
+            // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
+        }
+        return -1;
     };
 
     /* Funcion para mostrar cada vértice del arbol con sus respectivas aristas */
