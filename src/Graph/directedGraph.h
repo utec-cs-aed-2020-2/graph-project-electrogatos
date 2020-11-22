@@ -15,11 +15,15 @@ class DirectedGraph : public Graph<TV, TE>{
    public:
     bool insertVertex(int id, TV vertex) {
         // this->vertexes.insert(make_pair(id, vertex));
-        Vertex<TV, TE>* v = new Vertex<TV, TE>();
-        v->data = vertex;
-        this->vertexes[id] = v;
-
-        return true;
+        if (!findById(id)) {
+            Vertex<TV, TE>* v = new Vertex<TV, TE>();
+            v->data = vertex;
+            this->vertexes[id] = v;
+            return true;
+        } else {
+            cout << "Ya existe el vertice" << endl;
+            return false;
+        }
     }
 
     /* Direccion solo id1 -> id2 */
@@ -28,65 +32,80 @@ class DirectedGraph : public Graph<TV, TE>{
         Vertex<TV, TE>* v1 = this->vertexes.at(id1);
         Vertex<TV, TE>* v2 = this->vertexes.at(id2);
 
-        // Se añade un nuevo edge al vertices con id1
-        Edge<TV, TE>* e = new Edge<TV, TE>();
-        e->weight = w;
-        e->vertexes[0] = v1;
-        e->vertexes[1] = v2;
-        v1->edges.push_back(e);
+        if (!searchEdge(id1, id2)) {
+            // Se añade un nuevo edge al vertices con id1
+            Edge<TV, TE>* e = new Edge<TV, TE>();
+            e->weight = w;
+            e->vertexes[0] = v1;
+            e->vertexes[1] = v2;
+            v1->edges.push_back(e);
 
-        // Se añade a la lista de aristas del grafo
-        this->graphedges.push_front(e);
+            // Se añade a la lista de aristas del grafo
+            this->graphedges.push_front(e);
 
-        return true;
+            return true;
+        } else {
+            cout << "Ya existe el Edge" << endl;
+            return false;
+        }
     }  
 
     bool deleteVertex(int id) {
-        Vertex<TV, TE>* vertex2remove = this->vertexes.at(id);
-        // cout << "Data: " << vertex2remove->data << endl;
-        
-        for (auto edge : vertex2remove->edges){
-            this->graphedges.remove(edge);
-        }
-
-        // Create a copy of graphedges to delete edges 
-        list<Edge<TV, TE>*> graphedges_copy;
-        graphedges_copy = this->graphedges;
-        // Find edges that end = vertex2remove, and delete 
-        // in graphedges and in edges list of this vertex
-        for (auto edge : graphedges_copy) {
-            // cout << edge->vertexes[0]->data << " -> " << edge->vertexes[1]->data << endl;
-            if (edge->vertexes[1] == vertex2remove) {
-                // cout << edge->vertexes[0]->data << " -> " << edge->vertexes[1]->data << endl;
-                edge->vertexes[0]->edges.remove(edge);
+        if (findById(id)) {
+            Vertex<TV, TE>* vertex2remove = this->vertexes.at(id);
+            // cout << "Data: " << vertex2remove->data << endl;
+            
+            for (auto edge : vertex2remove->edges){
                 this->graphedges.remove(edge);
             }
+
+            // Create a copy of graphedges to delete edges 
+            list<Edge<TV, TE>*> graphedges_copy;
+            graphedges_copy = this->graphedges;
+            // Find edges that end = vertex2remove, and delete 
+            // in graphedges and in edges list of this vertex
+            for (auto edge : graphedges_copy) {
+                // cout << edge->vertexes[0]->data << " -> " << edge->vertexes[1]->data << endl;
+                if (edge->vertexes[1] == vertex2remove) {
+                    // cout << edge->vertexes[0]->data << " -> " << edge->vertexes[1]->data << endl;
+                    edge->vertexes[0]->edges.remove(edge);
+                    this->graphedges.remove(edge);
+                }
+            }
+
+            /* Crear el destructor de Vertex */
+            this->vertexes.erase(id);
+
+            return true;
+        } else {
+            cout << "Can not delete vertex " << id << endl; 
+            return false; 
         }
-
-        /* Crear el destructor de Vertex */
-        this->vertexes.erase(id);
-
-        return true; 
     }
 
     // Se supone que solo existe la dirección start -> end
     bool deleteEdge(int start, int end) { 
-        Vertex<TV, TE>* vertex2remove_1 = this->vertexes.at(start);
-        Vertex<TV, TE>* vertex2remove_2 = this->vertexes.at(end);
-        
-        Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
+        if (searchEdge(start, end)) { 
+            Vertex<TV, TE>* vertex2remove_1 = this->vertexes.at(start);
+            Vertex<TV, TE>* vertex2remove_2 = this->vertexes.at(end);
+            
+            Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
 
-        // delete start -> end
-        for (auto edge : vertex2remove_1->edges){
-            if (edge->vertexes[1] == vertex2remove_2) {
-                edge2remove = edge;
+            // delete start -> end
+            for (auto edge : vertex2remove_1->edges){
+                if (edge->vertexes[1] == vertex2remove_2) {
+                    edge2remove = edge;
+                }
             }
-        }
-        vertex2remove_1->edges.remove(edge2remove);
-        // se elimina el edge en la lista para kruskal
-        this->graphedges.remove(edge2remove); 
+            vertex2remove_1->edges.remove(edge2remove);
+            // se elimina el edge en la lista para kruskal
+            this->graphedges.remove(edge2remove); 
 
-        return true; 
+            return true; 
+        } else {
+            cout << "Can not delete edge " << start << "->" << end << endl; 
+            return false;
+        }
     }
 
     float density() { 
@@ -94,7 +113,9 @@ class DirectedGraph : public Graph<TV, TE>{
             // throw "The graph is empty";
             return 0.0;
         } else {
-            return ( this->graphedges.size() ) / ( this->vertexes.size() * ( this->vertexes.size() - 1 ) );
+            float a = this->graphedges.size();
+            float b = this->vertexes.size() * ( this->vertexes.size() - 1 );
+            return a/b;
         }
     }
 
@@ -131,8 +152,13 @@ class DirectedGraph : public Graph<TV, TE>{
     void clear() {}
 
     Vertex<TV, TE>* displayVertex(int id) {
-        Vertex<TV, TE>* v = this->vertexes.at(id);
-        return v;
+        try { 
+            Vertex<TV, TE>* v = this->vertexes.at(id);
+            return v;
+        } catch(const out_of_range &e) {
+            // cout << "Vertex not found!!!" << endl;
+            return nullptr;
+        }
     };
 
     /* Funcion para determinar si existe el vértice en el árbol por id */
@@ -165,6 +191,20 @@ class DirectedGraph : public Graph<TV, TE>{
         }
         return -1;
     }  
+
+    bool searchEdge(int id1, int id2) {
+        // Se obtienen los vertices de la lista vertexes
+        Vertex<TV, TE>* v1 = this->vertexes.at(id1);
+        Vertex<TV, TE>* v2 = this->vertexes.at(id2);
+        // cout << "Finding..."<< endl;
+        for (auto edges_ : this->graphedges) {
+            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) || ( (edges_->vertexes[1]->data == v1->data) && (edges_->vertexes[0]->data == v2->data) ) ) {
+                return true;
+            }
+            // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
+        }
+        return false;
+    };
 
 };
 
