@@ -36,3 +36,7 @@ build/
 build/*
 src/Graph/undirectedGraph.h.bk
 src/Tester/tester.cpp.bk
+src/Tester/tester.cpp.bk2
+src/Tester/ejm.txt
+src/Graph/Algoritmos/kruskal.h.bk1
+src/main.cpp.bk
