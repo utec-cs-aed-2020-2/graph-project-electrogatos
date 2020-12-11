@@ -16,7 +16,7 @@ template <typename TV, typename TE>
 class BFS {
    public:
     UnDirectedGraph<TV, TE> Graph;
-    BFS(UnDirectedGraph<TV, TE> &Graph) {
+    BFS(UnDirectedGraph<TV, TE> &Graph) {//tambien sobre grafo dirigido
         this->Graph = Graph;
     };
 
