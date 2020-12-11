@@ -1,3 +1,5 @@
+[Revisado]
+
 # Algoritmos y Estructura de Datos
 
 ## Proyecto sobre Grafos
@@ -9,6 +11,7 @@
 -   Atachagua, James
 -   Garcia, Fernando
 -   Paniagua, Estephany
+
 
 ---
 
