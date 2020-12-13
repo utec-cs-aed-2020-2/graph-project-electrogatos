@@ -1,3 +1,8 @@
+- [Revisado: *Nota 18*]
+- [Revisar Comentarios en los commits]
+- [En general, extender el algoritmo de busqueda en profundidad y anchura para grafos dirigidos]
+- [Borrar los codigos comentados]
+
 # Algoritmos y Estructura de Datos
 
 ## Proyecto sobre Grafos
@@ -9,6 +14,7 @@
 -   Atachagua, James
 -   Garcia, Fernando
 -   Paniagua, Estephany
+
 
 ---
 
