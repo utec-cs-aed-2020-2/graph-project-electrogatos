@@ -84,12 +84,8 @@ class UnDirectedGraph : public Graph<TV, TE> {
                 edge->vertexes[1]->edges.remove(edge2remove);
             }
             
-            /* Crear el destructor de Vertex */
+            /* Se elimina el Vertex en la lista*/
             this->vertexes.erase(id);  
-        this->vertexes.erase(id);
-            this->vertexes.erase(id);  
-            return true;  
-        return true; 
             return true;  
         } else {
             cout << "Can not delete vertex " << id << endl; 
