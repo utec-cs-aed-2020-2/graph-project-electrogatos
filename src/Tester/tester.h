@@ -14,6 +14,9 @@
 #include "../Graph/Algoritmos/prim.h"
 #include "../Graph/Algoritmos/depthfs.h"
 #include "../Graph/Algoritmos/breadthfs.h"
+#include "../Graph/Algoritmos/dijkstra.h"
+#include "../Graph/Algoritmos/floydwarshall.h"
+#include "../Graph/Algoritmos/bellmanford.h"
 
 using namespace std;
 
