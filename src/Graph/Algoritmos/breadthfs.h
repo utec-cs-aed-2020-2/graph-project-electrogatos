@@ -7,62 +7,86 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../undirectedGraph.h"
 #include "../graph.h"
+#include "../undirectedGraph.h"
 
 using namespace std;
 
 template <typename TV, typename TE>
 class BFS {
    public:
-    UnDirectedGraph<TV, TE> Graph;
-    BFS(UnDirectedGraph<TV, TE> &Graph) {//tambien sobre grafo dirigido
-        this->Graph = Graph;
+    Graph<TV, TE>* Graph;
+    ::Graph<TV, TE>* BFSGraph;
+    BFS(::Graph<TV, TE>& Graph) {  // tambien sobre grafo dirigido
+        this->Graph = &Graph;
+        if (this->Graph->type == 0) {
+            this->BFSGraph = new UnDirectedGraph<TV, TE>();
+        } else if (this->Graph->type == 1) {
+            this->BFSGraph = new DirectedGraph<TV, TE>();
+        } else {
+            cout << "Error" << endl;
+        }
     };
 
-    UnDirectedGraph<TV, TE> apply(){
-        UnDirectedGraph<TV, TE> BFSGraph;
+    ::Graph<TV, TE>* apply() {
+        // ::Graph<TV, TE> *BFSGraph = new UnDirectedGraph<TV, TE>();
         unordered_map<Vertex<TV, TE>*, bool> visited;
 
         typename unordered_map<int, Vertex<TV, TE>*>::iterator itr;
-        for (itr = this->Graph.vertexes.begin(); itr != this->Graph.vertexes.end(); itr++) {
+        for (itr = this->Graph->vertexes.begin(); itr != this->Graph->vertexes.end(); itr++) {
             // Se marca todos los vértices como no visitados
             visited[itr->second] = false;
             // Inserta el vértice con su ID al nuevo grafo
-            BFSGraph.insertVertex(itr->first, itr->second->data);
+            BFSGraph->insertVertex(itr->first, itr->second->data);
         }
 
         // Para cada vértice en el árbol
-        for (auto itr_new : this->Graph.vertexes) {
-            if (!visited[itr_new.second]) {
-                // Create a queue of Vertex
-                queue<Vertex<TV, TE>*> queue;
-                // Se coloca el vértice actual como visitado y se encola
-                visited[itr_new.second] = true;
-                queue.push(itr_new.second);
+        // for (auto itr_new : this->Graph->vertexes) {
+        // cout << "vi1: " << visited[itr_new.second] << endl;
+        // if (!visited[itr_new.second]) {
+        // cout << "no vi1" << endl;
+        // Create a queue of Vertex
+        queue<Vertex<TV, TE>*> queue;
+        // Se coloca el vértice actual como visitado y se encola
+        cout << "Incio: " << this->Graph->vertexes.begin()->second->data << endl;
+        // cout << this->Graph->vertexes.at(1)->data << endl; // for test
+        visited[this->Graph->vertexes.begin()->second] = true;
+        // visited[this->Graph->vertexes.at(1)] = true; // for test
+        // if (this->Graph->type == 0) {
+        //     visited[itr_new.second] = true;
+        // } else if (this->Graph->type == 1) {
 
-                while (!queue.empty()) {
-                    Vertex<TV, TE>* v = queue.front();
-                    queue.pop();
+        // } else {
+        //     cout << "Error" << endl;
+        // }
+        queue.push(this->Graph->vertexes.begin()->second);
+        // queue.push(this->Graph->vertexes.at(1)); // for test
 
-                    // Para cada vértice adyacente de v
-                    //--> si no ha sido visitado se marca como visitado y encola
-                    for (auto edg : v->edges) {
-                        if (!visited[edg->vertexes[1]]) {
-                            visited[edg->vertexes[1]] = true;
-                            queue.push(edg->vertexes[1]);
-                            // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
-                            BFSGraph.createEdge(this->Graph.findByVertex(edg->vertexes[0]),
-                                                this->Graph.findByVertex(edg->vertexes[1]), 1);
-                        }
-                    }
+        while (!queue.empty()) {
+            // cout << "no empty" << endl;
+            Vertex<TV, TE>* v = queue.front();
+            queue.pop();
+
+            // Para cada vértice adyacente de v
+            //--> si no ha sido visitado se marca como visitado y encola
+            for (auto edg : v->edges) {
+                // cout << "vi2: " << visited[edg->vertexes[1]] << endl;
+                if (!visited[edg->vertexes[1]]) {
+                    // cout << "entro" << endl;
+                    visited[edg->vertexes[1]] = true;
+                    queue.push(edg->vertexes[1]);
+                    // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
+                    // cout << this->Graph->findByVertex(edg->vertexes[0]) << " " << endl;
+                    BFSGraph->createEdge(this->Graph->findByVertex(edg->vertexes[0]),
+                                         this->Graph->findByVertex(edg->vertexes[1]), 1);
                 }
             }
         }
+        // }
+        // }
         // cout << endl;
         return BFSGraph;
     }
-
 };
 
 #endif
