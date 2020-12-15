@@ -8,9 +8,7 @@ using namespace std;
 template <typename TV, typename TE>
 class UnDirectedGraph : public Graph<TV, TE> {
    public:
-    UnDirectedGraph(){
-        this->type = 0;
-    }
+    UnDirectedGraph() { this->type = 0; }
 
    private:
     /* Función para realizar la comparación al momento de ordenar el array graphedges */
@@ -61,100 +59,98 @@ class UnDirectedGraph : public Graph<TV, TE> {
             // cout << "Ya existe el Edge" << endl;
             return false;
         }
-        
-        
     }
 
     bool deleteVertex(int id) {
         if (findById(id)) {
             Vertex<TV, TE>* vertex2remove = this->vertexes.at(id);
             // cout << "Data: " << vertex2remove->data << endl;
-            
+
             /* Por cada arista del vertex(id) hay que eliminar la union del otro vertex */
             Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
             for (auto edge : vertex2remove->edges) {
                 // cout << "Vertex->: " << edge->vertexes[1]->data << endl;
                 // Se elimina el sentido contrario de la arista
-                for (auto EdgeOfVertex : edge->vertexes[1]->edges){
-                    if (EdgeOfVertex->vertexes[1] == vertex2remove){
+                for (auto EdgeOfVertex : edge->vertexes[1]->edges) {
+                    if (EdgeOfVertex->vertexes[1] == vertex2remove) {
                         // cout << "Vertex1 of edge->: " << EdgeOfVertex->vertexes[1]->data << endl;
                         edge2remove = EdgeOfVertex;
                     }
                 }
                 // se elimina el edge en la lista para kruskal
-                this->graphedges.remove(edge); 
-                this->graphedges.remove(edge2remove); 
+                this->graphedges.remove(edge);
+                this->graphedges.remove(edge2remove);
 
                 // se elemina el edge en la propia lista de edges del vertice
                 edge->vertexes[1]->edges.remove(edge2remove);
             }
-            
+
             /* Se elimina el Vertex en la lista*/
-            this->vertexes.erase(id);  
-            return true;  
+            this->vertexes.erase(id);
+            return true;
         } else {
-            cout << "Can not delete vertex " << id << endl; 
-            return false; 
+            cout << "Can not delete vertex " << id << endl;
+            return false;
         }
     }
 
-    bool deleteEdge(int start, int end) { 
-        if (searchEdge(start, end)) { 
+    bool deleteEdge(int start, int end) {
+        if (searchEdge(start, end)) {
             Vertex<TV, TE>* vertex2remove_1 = this->vertexes.at(start);
             Vertex<TV, TE>* vertex2remove_2 = this->vertexes.at(end);
 
             Edge<TV, TE>* edge2remove = new Edge<TV, TE>();
 
             // delete start -> end
-            for (auto edge : vertex2remove_1->edges){
+            for (auto edge : vertex2remove_1->edges) {
                 if (edge->vertexes[1] == vertex2remove_2) {
                     edge2remove = edge;
                 }
             }
             vertex2remove_1->edges.remove(edge2remove);
             // se elimina el edge en la lista para kruskal
-            this->graphedges.remove(edge2remove); 
+            this->graphedges.remove(edge2remove);
 
             // delete end -> start
             edge2remove = nullptr;
-            for (auto edge : vertex2remove_2->edges){
+            for (auto edge : vertex2remove_2->edges) {
                 if (edge->vertexes[1] == vertex2remove_1) {
                     edge2remove = edge;
                 }
             }
             vertex2remove_2->edges.remove(edge2remove);
-            return true; 
+            return true;
         } else {
-            cout << "Can not delete edge " << start << "->" << end << endl; 
+            cout << "Can not delete edge " << start << "->" << end << endl;
             return false;
         }
     }
 
-    float density() { 
-        if (empty()){
+    float density() {
+        if (empty()) {
             // throw "The graph is empty";
             return 0.0;
         } else {
             // cout << this->graphedges.size() << " " << this->vertexes.size() << endl;
             float a = 2 * this->graphedges.size();
-            float b = this->vertexes.size() * ( this->vertexes.size() - 1 );
+            float b = this->vertexes.size() * (this->vertexes.size() - 1);
             // cout << a << " " << b << endl;
-            return a/b;
+            return a / b;
         }
     }
 
-    bool isDense(float threshold = 0.5) { 
+    bool isDense(float threshold = 0.5) {
         if (density() >= threshold) {
             return true;
         } else {
             return false;
-        }  
+        }
     }
 
     // saber si el grafo es conexo, se puede usar disjoin set (si existen 2 DS es no conexo)
-    bool isConnected() { // Need to fix
+    bool isConnected() {  // Need to fix
         // cout << this->total_sets << endl;
-        if (this->total_sets == -1){
+        if (this->total_sets == -1) {
             cout << "Kruskal not executed" << endl;
             return false;
         } else {
@@ -162,12 +158,12 @@ class UnDirectedGraph : public Graph<TV, TE> {
         }
     };
 
-    bool isStronglyConnected() { 
+    bool isStronglyConnected() {
         throw "This is a undirected graph";
-        return false; 
+        return false;
     }
 
-    bool empty() { 
+    bool empty() {
         // El grafo puede tener vertices, pero si no tiene aristas es vacio
         if (this->graphedges.empty()) {
             return true;
@@ -180,10 +176,10 @@ class UnDirectedGraph : public Graph<TV, TE> {
     void clear() {}
 
     Vertex<TV, TE>* displayVertex(int id) {
-        try { 
+        try {
             Vertex<TV, TE>* v = this->vertexes.at(id);
             return v;
-        } catch(const out_of_range &e) {
+        } catch (const out_of_range& e) {
             // cout << "Vertex not found!!!" << endl;
             return nullptr;
         }
@@ -218,7 +214,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
             if (itr->second == v) return itr->first;
         }
         return -1;
-    }    
+    }
 
     /* Funcion para determinar si existe el vértice en el árbol por el mismo vértice */
     Vertex<TV, TE>* findByData(TV data) {
@@ -227,7 +223,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
             if (itr->second->data == data) return itr->second;
         }
         return nullptr;
-    }    
+    }
 
     bool searchEdge(int id1, int id2) {
         // Se obtienen los vertices de la lista vertexes
@@ -235,7 +231,10 @@ class UnDirectedGraph : public Graph<TV, TE> {
         Vertex<TV, TE>* v2 = this->vertexes.at(id2);
         // cout << "Finding..."<< endl;
         for (auto edges_ : this->graphedges) {
-            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) || ( (edges_->vertexes[1]->data == v1->data) && (edges_->vertexes[0]->data == v2->data) ) ) {
+            if (((edges_->vertexes[0]->data == v1->data) &&
+                 (edges_->vertexes[1]->data == v2->data)) ||
+                ((edges_->vertexes[1]->data == v1->data) &&
+                 (edges_->vertexes[0]->data == v2->data))) {
                 return true;
             }
             // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
@@ -249,7 +248,10 @@ class UnDirectedGraph : public Graph<TV, TE> {
         Vertex<TV, TE>* v2 = this->vertexes.at(id2);
         // cout << "Finding..."<< endl;
         for (auto edges_ : this->graphedges) {
-            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) || ( (edges_->vertexes[1]->data == v1->data) && (edges_->vertexes[0]->data == v2->data) ) ) {
+            if (((edges_->vertexes[0]->data == v1->data) &&
+                 (edges_->vertexes[1]->data == v2->data)) ||
+                ((edges_->vertexes[1]->data == v1->data) &&
+                 (edges_->vertexes[0]->data == v2->data))) {
                 return edges_->weight;
             }
             // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
@@ -269,7 +271,6 @@ class UnDirectedGraph : public Graph<TV, TE> {
             std::cout << std::endl;
         }
     };
-
 };
 
 #endif
