@@ -12,6 +12,7 @@
 #include "vertex.h"
 
 using namespace std;
+# define INF 0x3f3f3f3f 
 
 template <typename TV, typename TE>
 class Graph {
@@ -20,6 +21,7 @@ class Graph {
     list<Edge<TV, TE>*> graphedges;
     // DisjoinSet<string>* dsgraph;
     int total_sets = -1;
+    int type = -1;
 
    public: // need to be virtual??? 
     virtual bool insertVertex(int id, TV vertex) = 0;
@@ -36,7 +38,10 @@ class Graph {
 
     virtual Vertex<TV, TE>* displayVertex(int id) = 0;
     virtual bool findById(int id) = 0;
+    virtual int findByVertex(Vertex<TV, TE>* v) = 0;
     virtual void display() = 0;
+    virtual bool searchEdge(int id1, int id2) = 0;
+    virtual TE getweigthEdge(int id1, int id2) = 0;
 };
 
 #endif

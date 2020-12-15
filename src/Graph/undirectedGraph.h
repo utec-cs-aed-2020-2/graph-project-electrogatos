@@ -7,6 +7,11 @@ using namespace std;
 
 template <typename TV, typename TE>
 class UnDirectedGraph : public Graph<TV, TE> {
+   public:
+    UnDirectedGraph(){
+        this->type = 0;
+    }
+
    private:
     /* Función para realizar la comparación al momento de ordenar el array graphedges */
     static bool compare_nocase(const Edge<TV, TE>* first, const Edge<TV, TE>* second) {
@@ -22,7 +27,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
             this->vertexes[id] = v;
             return true;
         } else {
-            cout << "Ya existe el vertice" << endl;
+            // cout << "Ya existe el vertice" << endl;
             return false;
         }
     }
@@ -53,7 +58,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
             // v2->edges.sort(compare_nocase);
             return true;
         } else {
-            cout << "Ya existe el Edge" << endl;
+            // cout << "Ya existe el Edge" << endl;
             return false;
         }
         

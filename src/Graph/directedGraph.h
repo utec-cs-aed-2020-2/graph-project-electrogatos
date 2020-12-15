@@ -6,6 +6,11 @@ using namespace std;
 
 template<typename TV, typename TE>
 class DirectedGraph : public Graph<TV, TE>{
+   public:
+    DirectedGraph(){
+        this->type = 1;
+    }
+
    private:
     /* Función para realizar la comparación al momento de ordenar el array graphedges */
     static bool compare_nocase(const Edge<TV, TE>* first, const Edge<TV, TE>* second) {
@@ -21,7 +26,7 @@ class DirectedGraph : public Graph<TV, TE>{
             this->vertexes[id] = v;
             return true;
         } else {
-            cout << "Ya existe el vertice" << endl;
+            // cout << "Ya existe el vertice" << endl;
             return false;
         }
     }
@@ -189,6 +194,7 @@ class DirectedGraph : public Graph<TV, TE>{
         for (itr = this->vertexes.begin(); itr != this->vertexes.end(); itr++) {
             if (itr->second == v) return itr->first;
         }
+        cout << "no" << endl;
         return -1;
     }  
 
@@ -198,12 +204,26 @@ class DirectedGraph : public Graph<TV, TE>{
         Vertex<TV, TE>* v2 = this->vertexes.at(id2);
         // cout << "Finding..."<< endl;
         for (auto edges_ : this->graphedges) {
-            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) || ( (edges_->vertexes[1]->data == v1->data) && (edges_->vertexes[0]->data == v2->data) ) ) {
+            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) ) {
                 return true;
             }
             // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
         }
         return false;
+    };
+
+    TE getweigthEdge(int id1, int id2) {
+        // Se obtienen los vertices de la lista vertexes
+        Vertex<TV, TE>* v1 = this->vertexes.at(id1);
+        Vertex<TV, TE>* v2 = this->vertexes.at(id2);
+        // cout << "Finding..."<< endl;
+        for (auto edges_ : this->graphedges) {
+            if ( ( (edges_->vertexes[0]->data == v1->data) && (edges_->vertexes[1]->data == v2->data) ) ) {
+                return edges_->weight;
+            }
+            // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
+        }
+        return -1;
     };
 
 };
