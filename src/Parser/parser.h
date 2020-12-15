@@ -76,20 +76,20 @@ class AirportParser : JsonParser {
         for (auto& element : data) { 
             string id_origen = element["Airport ID"];
             Airport origen = this->airports.at(stoi(id_origen));
-            cout << "Origen: " << id_origen << " " << origen.name << " " << origen.latitude << " " << origen.longitude << endl;
+            // cout << "Origen: " << id_origen << " " << origen.name << " " << origen.latitude << " " << origen.longitude << endl;
 
             for (auto dest : element["destinations"]) {
                 string id_dest = dest;
                 double de;
                 try {
                     Airport destination = this->airports.at(stoi(id_dest));
-                    cout << "  Dest: " << id_dest << " " << destination.name << " " << destination.latitude << " " << destination.longitude << "  ";
+                    // cout << "  Dest: " << id_dest << " " << destination.name << " " << destination.latitude << " " << destination.longitude << "  ";
                     de = sqrt( pow( ( destination.latitude - origen.latitude ) , 2.0) + pow( ( destination.longitude - origen.longitude ) , 2.0) );
-                    cout << "Deuclidiana: " << de << endl;
+                    // cout << "Deuclidiana: " << de << endl;
                     tempGraph.createEdge(stoi(id_origen), stoi(id_dest), de);
                 } catch(const out_of_range &e) {
                     // cerr << "Exception at " << e.what() << endl;
-                    cout << "  Destination not found!!!" << endl;
+                    // cout << "  Destination not found!!!" << endl;
                 }
             }
         }
@@ -97,6 +97,44 @@ class AirportParser : JsonParser {
         // for (auto ar : this->airports) {
         //     cout << ar.first << " " << ar.second.name << " " << ar.second.latitude << " " << ar.second.longitude << endl;
         // }
+    };
+
+    void dGraphMake(DirectedGraph<string, double> &tempGraph){
+        // Create Vertexes 
+        for (auto& element : data) {
+            Airport a;
+            a.id = element["Airport ID"]; int id_int = stoi(a.id);
+            a.name = element["Name"];
+            a.city = element["City"];
+            a.country = element["Country"];
+            string la = element["Latitude"]; a.latitude = stod(la);
+            string lo = element["Longitude"]; a.longitude = stod(lo);            
+
+            // tempGraph.insertVertex(id_int, a.name);
+            tempGraph.insertVertex(id_int, a.id); // For simplicity
+            this->airports[id_int] = a;
+        }
+        // Create Edges 
+        for (auto& element : data) { 
+            string id_origen = element["Airport ID"];
+            Airport origen = this->airports.at(stoi(id_origen));
+            // cout << "Origen: " << id_origen << " " << origen.name << " " << origen.latitude << " " << origen.longitude << endl;
+
+            for (auto dest : element["destinations"]) {
+                string id_dest = dest;
+                double de;
+                try {
+                    Airport destination = this->airports.at(stoi(id_dest));
+                    // cout << "  Dest: " << id_dest << " " << destination.name << " " << destination.latitude << " " << destination.longitude << "  ";
+                    de = sqrt( pow( ( destination.latitude - origen.latitude ) , 2.0) + pow( ( destination.longitude - origen.longitude ) , 2.0) );
+                    // cout << "Deuclidiana: " << de << endl;
+                    tempGraph.createEdge(stoi(id_origen), stoi(id_dest), de);
+                } catch(const out_of_range &e) {
+                    // cerr << "Exception at " << e.what() << endl;
+                    // cout << "  Destination not found!!!" << endl;
+                }
+            }
+        }
     };
 };
 
