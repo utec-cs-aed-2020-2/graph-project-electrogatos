@@ -14,18 +14,18 @@ struct Edge;
 template <typename TV, typename TE>
 struct Vertex {
     TV data;
+    double lat, lng;
     list<Edge<TV, TE>*> edges;
 
     friend ostream& operator<<(ostream& o, const Vertex<TV, TE>* objeto) {
         if (objeto == nullptr) {
             o << "Vertex not found!!!";
             return o;
-        } else
-        {
+        } else {
             o << objeto->data << ": ";
             for (auto ver : objeto->edges) {
                 o << ver->vertexes[1]->data << "(" << ver->weight << ")"
-                << ", ";
+                  << ", ";
             }
             return o;
         }
