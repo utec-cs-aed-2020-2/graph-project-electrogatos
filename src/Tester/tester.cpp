@@ -36,16 +36,16 @@ void Tester::executeExamples() {
     //     testKruskal();
     //     testPrim();
     //     cout << "All tests passed" << endl;
-    // }   
+    // }
 }
 
 void Tester::executeParser() {
     cout << "================================================" << endl;
     cout << "Test Parser" << endl;
     cout << "================================================" << endl;
-    
-    AirportParser airportsparse("/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
-    
+
+    AirportParser airportsparse(
+        "D:\\Documentos\\AED-graph-project-electrogatos\\src\\Parser\\Data\\pe.json");
     cout << endl;
     cout << "================================================" << endl;
     cout << "uGraphMake" << endl;
@@ -76,21 +76,21 @@ void Tester::executeParser() {
 
     cout << "\nexecDFS()\n";
     DFS<string, double> DFS(airports);
-    Graph<string, double> *dsf = new UnDirectedGraph<string, double>();
+    Graph<string, double>* dsf = new UnDirectedGraph<string, double>();
     // UnDirectedGraph<string, float> dsf = DFS.apply();
     dsf = DFS.apply();
     dsf->display();
 
     cout << "\nexecBFS()\n";
     BFS<string, double> BFS(airports);
-    Graph<string, double> *bfs = new UnDirectedGraph<string, double>();
+    Graph<string, double>* bfs = new UnDirectedGraph<string, double>();
     // UnDirectedGraph<string, float> bfs = BFS.apply();
     bfs = BFS.apply();
     bfs->display();
 
     cout << "\nDensity: \n";
     cout << airports.density();
-    
+
     cout << "\nisDense(): " << std::boolalpha << airports.isDense() << endl;
 
     cout << "\nempty(): " << std::boolalpha << airports.empty() << endl;
@@ -196,13 +196,13 @@ void testDirectGraph() {
 
     cout << "\nexecDFS()\n";
     DFS<char, float> DFS(graph);
-    Graph<char, float> *dsf = new DirectedGraph<char, float>();
+    Graph<char, float>* dsf = new DirectedGraph<char, float>();
     dsf = DFS.apply();
     dsf->display();
 
     cout << "\nexecBFS()\n";
     BFS<char, float> BFS(graph);
-    Graph<char, float> *bfs = new DirectedGraph<char, float>();
+    Graph<char, float>* bfs = new DirectedGraph<char, float>();
     bfs = BFS.apply();
     bfs->display();
 
@@ -228,7 +228,7 @@ void testDirectGraph() {
 
     cout << "\nDensity: \n";
     cout << graph.density();
-    
+
     cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
 
     cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
@@ -238,16 +238,14 @@ void testDirectGraph() {
     // FloydWarshall<char, float> FloydWarshall(graph);
     // Graph<char, float> *dsf = new DirectedGraph<char, float>();
     // dsf = FloydWarshall.apply();
-
 }
 
 void testUnDirectGraph() {
-
     // // PPT Grafos Kruskal and Prim ejm
     //      1
     //  0 ------ 1 \-
     //  |      / |   \1
-    // 6|   4/   |3   - 4 
+    // 6|   4/   |3   - 4
     //  |  /     |   /1
     //   2 ----- 3 /
     //      1
@@ -257,13 +255,13 @@ void testUnDirectGraph() {
     graph.insertVertex(3, "2");
     graph.insertVertex(4, "3");
     graph.insertVertex(5, "4");
-    graph.createEdge(1, 3, 6); // 0 - 2 | 6
-    graph.createEdge(1, 2, 1); // 0 - 1 | 1
-    graph.createEdge(3, 2, 4); // 2 - 1 | 4
-    graph.createEdge(3, 4, 1); // 2 - 3 | 1
-    graph.createEdge(2, 4, 3); // 1 - 3 | 3
-    graph.createEdge(2, 5, 1); // 1 - 4 | 1
-    graph.createEdge(4, 5, 1); // 3 - 4 | 1
+    graph.createEdge(1, 3, 6);  // 0 - 2 | 6
+    graph.createEdge(1, 2, 1);  // 0 - 1 | 1
+    graph.createEdge(3, 2, 4);  // 2 - 1 | 4
+    graph.createEdge(3, 4, 1);  // 2 - 3 | 1
+    graph.createEdge(2, 4, 3);  // 1 - 3 | 3
+    graph.createEdge(2, 5, 1);  // 1 - 4 | 1
+    graph.createEdge(4, 5, 1);  // 3 - 4 | 1
 
     // For test
     // graph.insertVertex(1, "A");
@@ -287,14 +285,14 @@ void testUnDirectGraph() {
     // graph.createEdge(5, 7, 6); //E-G
     // graph.createEdge(7, 9, 6); //G-I
     // graph.createEdge(8, 9, 6); //H-I
-    
+
     // display as adjacency list
     /*
-     4: 1(1), 3(1), 
-     3: 2(1), 1(3), 4(1), 
-     2: 0(6), 1(4), 3(1), 
-     1: 0(1), 2(4), 3(3), 4(1), 
-     0: 2(6), 1(1), 
+     4: 1(1), 3(1),
+     3: 2(1), 1(3), 4(1),
+     2: 0(6), 1(4), 3(1),
+     1: 0(1), 2(4), 3(3), 4(1),
+     0: 2(6), 1(1),
     */
     graph.display();
 
@@ -310,11 +308,11 @@ void testUnDirectGraph() {
 
     // For Prim and Kruskal
     /*
-     0: 1(1), 
-     1: 4(1), 0(1), 
-     2: 3(1), 
-     3: 2(1), 4(1), 
-     4: 3(1), 1(1), 
+     0: 1(1),
+     1: 4(1), 0(1),
+     2: 3(1),
+     3: 2(1), 4(1),
+     4: 3(1), 1(1),
     */
     cout << "\nexecKruskal()\n";
     Kruskal<string, float> kruskal(graph);
@@ -327,28 +325,28 @@ void testUnDirectGraph() {
     mstp.display();
 
     /*
-     0: 2(1), 
-     1: 4(1), 
-     2: 3(1), 0(1), 
-     3: 4(1), 2(1), 
+     0: 2(1),
+     1: 4(1),
+     2: 3(1), 0(1),
+     3: 4(1), 2(1),
      4: 1(1), 3(1),
     */
     cout << "\nexecDFS()\n";
     DFS<string, float> DFS(graph);
-    Graph<string, float> *dsf = new UnDirectedGraph<string, float>();
+    Graph<string, float>* dsf = new UnDirectedGraph<string, float>();
     dsf = DFS.apply();
     dsf->display();
 
     /*
-     0: 1(1), 
-     1: 4(1), 0(1), 2(1), 
-     2: 1(1), 
-     3: 4(1), 
+     0: 1(1),
+     1: 4(1), 0(1), 2(1),
+     2: 1(1),
+     3: 4(1),
      4: 1(1), 3(1),
     */
     cout << "\nexecBFS()\n";
     BFS<string, float> BFS(graph);
-    Graph<string, float> *bfs = new UnDirectedGraph<string, float>();
+    Graph<string, float>* bfs = new UnDirectedGraph<string, float>();
     bfs = BFS.apply();
     bfs->display();
 
@@ -362,7 +360,7 @@ void testUnDirectGraph() {
 
     cout << "\nDensity: \n";
     cout << graph.density();
-    
+
     cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
 
     cout << "\nDelete Vertex id: 5 (4)\n";

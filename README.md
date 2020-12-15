@@ -1,7 +1,7 @@
-- [Revisado: *Nota 18*]
-- [Revisar Comentarios en los commits]
-- [En general, extender el algoritmo de busqueda en profundidad y anchura para grafos dirigidos]
-- [Borrar los codigos comentados]
+-   [Revisado: *Nota 18*]
+-   [Revisar Comentarios en los commits]
+-   [En general, extender el algoritmo de busqueda en profundidad y anchura para grafos dirigidos]
+-   [Borrar los codigos comentados]
 
 # Algoritmos y Estructura de Datos
 
@@ -15,6 +15,40 @@
 -   Garcia, Fernando
 -   Paniagua, Estephany
 
+## Ejecución
+
+Software necesario:
+
+-   VScode
+
+Es necesario modificar la ruta de importación del archivo JSON con la ruta completa del sistema operativo desde donde se encuentre en la línea 48 del archivo `src/Tester/tester.cpp`.
+
+### Automático
+
+Independiente del sistema operativo, revisar el archivo `.vscode/tasks.json` y comentar o descomentar la línea de dependencia de la creación del folder de salida (línea 66). Sugerencia: comentar en windows, descomentar en mac o linux.
+
+Ejecutar la tarea por defecto con `Ctrl + Shift + B`.
+
+### Manual
+
+```bash
+# Compilar en linux
+g++ --std=c++11 \
+	-g \
+	src/main.cpp \
+	src/Tester/*.cpp \
+	-o \
+	build/main.out   # en linux
+
+# Compilar en Windows
+g++ --std=c++11 -g src/main.cpp src/Tester/*.cpp -o build/main.exe
+
+# Ejecutar en linux
+./build/main.out
+
+# Ejecutar en windows
+build\main.exe
+```
 
 ---
 
