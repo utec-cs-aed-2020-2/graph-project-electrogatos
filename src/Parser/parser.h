@@ -35,20 +35,11 @@ class JsonParser {
    protected:
     string jsonPath;
     json data;
-    // virtual void insertV() = 0;
-    // virtual void insertE() = 0;
 
    public:
     JsonParser(string jsonPath) {  // readJSON()
         ifstream file(jsonPath);
         data = json::parse(file);
-
-        // For Test
-        // for (int i = 0; i < 3; i++) {
-        //     Airport a1;
-        //     a1.id = data[i]["Airport ID"];
-        //     cout << a1.id << endl;
-        // }
     }
 };
 
@@ -63,47 +54,34 @@ class AirportParser : JsonParser {
             Airport a;
             a.id = element["Airport ID"];
             int id_int = stoi(a.id);
-            a.name = element["Name"];
+            string lat = element["Latitude"];
+            string lng = element["Longitude"];
             a.city = element["City"];
             a.country = element["Country"];
-            string la = element["Latitude"];
-            a.latitude = stod(la);
-            string lo = element["Longitude"];
-            a.longitude = stod(lo);
+            a.name = element["Name"];
+            a.latitude = stod(lat);
+            a.longitude = stod(lng);
 
-            // tempGraph.insertVertex(id_int, a.name);
-            tempGraph.insertVertex(id_int, a.id);  // For simplicity
+            tempGraph.insertVertex(id_int, a.id);
             this->airports[id_int] = a;
         }
         // Create Edges
         for (auto& element : data) {
             string id_origen = element["Airport ID"];
             Airport origen = this->airports.at(stoi(id_origen));
-            // cout << "Origen: " << id_origen << " " << origen.name << " " << origen.latitude << "
-            // " << origen.longitude << endl;
 
             for (auto dest : element["destinations"]) {
                 string id_dest = dest;
-                double de;
                 try {
                     Airport destination = this->airports.at(stoi(id_dest));
-                    // cout << "  Dest: " << id_dest << " " << destination.name << " " <<
-                    // destination.latitude << " " << destination.longitude << "  ";
-                    de = sqrt(pow((destination.latitude - origen.latitude), 2.0) +
-                              pow((destination.longitude - origen.longitude), 2.0));
-                    // cout << "Deuclidiana: " << de << endl;
+                    double de = calculateDistanceAirports(&origen, &destination);
                     tempGraph.createEdge(stoi(id_origen), stoi(id_dest), de);
                 } catch (const out_of_range& e) {
-                    // cerr << "Exception at " << e.what() << endl;
-                    // cout << "  Destination not found!!!" << endl;
+                    cerr << "Exception at " << e.what() << endl;
+                    cerr << "  Destination not found!!!" << endl;
                 }
             }
         }
-        // For test
-        // for (auto ar : this->airports) {
-        //     cout << ar.first << " " << ar.second.name << " " << ar.second.latitude << " " <<
-        //     ar.second.longitude << endl;
-        // }
     };
 
     void dGraphMake(DirectedGraph<string, double>& tempGraph) {
@@ -112,43 +90,42 @@ class AirportParser : JsonParser {
             Airport a;
             a.id = element["Airport ID"];
             int id_int = stoi(a.id);
-            a.name = element["Name"];
+            string lat = element["Latitude"];
+            string lng = element["Longitude"];
             a.city = element["City"];
             a.country = element["Country"];
-            string la = element["Latitude"];
-            a.latitude = stod(la);
-            string lo = element["Longitude"];
-            a.longitude = stod(lo);
+            a.name = element["Name"];
+            a.latitude = stod(lat);
+            a.longitude = stod(lng);
 
-            // tempGraph.insertVertex(id_int, a.name);
             tempGraph.insertVertex(id_int, a.id);  // For simplicity
             this->airports[id_int] = a;
         }
+
         // Create Edges
         for (auto& element : data) {
             string id_origen = element["Airport ID"];
             Airport origen = this->airports.at(stoi(id_origen));
-            // cout << "Origen: " << id_origen << " " << origen.name << " " << origen.latitude << "
-            // " << origen.longitude << endl;
 
             for (auto dest : element["destinations"]) {
                 string id_dest = dest;
-                double de;
                 try {
                     Airport destination = this->airports.at(stoi(id_dest));
-                    // cout << "  Dest: " << id_dest << " " << destination.name << " " <<
-                    // destination.latitude << " " << destination.longitude << "  ";
-                    de = sqrt(pow((destination.latitude - origen.latitude), 2.0) +
-                              pow((destination.longitude - origen.longitude), 2.0));
-                    // cout << "Deuclidiana: " << de << endl;
+                    double de = calculateDistanceAirports(&origen, &destination);
                     tempGraph.createEdge(stoi(id_origen), stoi(id_dest), de);
                 } catch (const out_of_range& e) {
-                    // cerr << "Exception at " << e.what() << endl;
-                    // cout << "  Destination not found!!!" << endl;
+                    cerr << "Exception at " << e.what() << endl;
+                    cerr << "  Destination not found!!!" << endl;
                 }
             }
         }
     };
+
+   private:
+    double calculateDistanceAirports(Airport* origin, Airport* destination) {
+        return sqrt(pow((destination->longitude - origin->longitude), 2.0) +
+                    pow((destination->latitude - origin->latitude), 2.0));
+    }
 };
 
 class CityParser : JsonParser {
