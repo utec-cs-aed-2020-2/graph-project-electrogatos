@@ -21,6 +21,7 @@ class AStar {
     Vertex<TV, TE>* v_init;
     Vertex<TV, TE>* v_dest;
     unordered_map<Vertex<TV, TE>*, TE> dist;
+    unordered_map<Vertex<TV, TE>*, Vertex<TV, TE>*> parent;
 
     AStar(::Graph<TV, TE>& Graph, TV init, TV dest) {  // tambien sobre grafo dirigido
         this->Graph = &Graph;
@@ -47,9 +48,10 @@ class AStar {
 
     // ::Graph<TV, TE>* apply(){
     unordered_map<Vertex<TV, TE>*, TE> apply() {
+        unordered_map<Vertex<TV, TE>*, bool> visited;
+
         // iPair ==>  distancia - vertex
         typedef pair<TE, Vertex<TV, TE>*> iPair;
-
         priority_queue<iPair, vector<iPair>, greater<iPair> > pq;
 
         // init distances as infinite (INF)
@@ -57,20 +59,28 @@ class AStar {
         for (itr = this->Graph->vertexes.begin(); itr != this->Graph->vertexes.end(); itr++) {
             // Se marca todos los vértices como no visitados
             dist[itr->second] = INF;
+            parent[itr->second] = itr->second;
             // Inserta el vértice con su ID al nuevo grafo
             DGraph->insertVertex(itr->first, itr->second->data);
         }
 
         // inserte el vertex inicial en la cola de prioridad y se inizia su distancia como 0
-        cout << "Incio: " << v_init->data << endl;
+        // cout << "Incio: " << v_init->data << endl;
         
         pq.push(make_pair(0, v_init));
-        dist[this->Graph->vertexes.begin()->second] = 0;
+        dist[v_init] = 0;
 
         // For test
         // cout << "Incio: " << this->Graph->vertexes.at(1) << endl;
         // pq.push(make_pair(0, this->Graph->vertexes.at(1)));
         // dist[this->Graph->vertexes.at(1)] = 0;
+
+        // /* print actual table */
+        //     cout << "          ";
+        //     for (auto e : dist) {
+        //         cout << setw(10) << e.first->data << setw(10); 
+        //     }
+        //     cout << endl; /* print actual table */
 
         while (!pq.empty()) {
             // sacas el vertex con menor distancia
@@ -89,13 +99,31 @@ class AStar {
                 // si hay un camino más corto a v por u
                 if (dist[v] > dist[u] + weight + heur) {
                     // Updating distance of v
-                    // cout << "Update " << endl;
                     dist[v] = dist[u] + weight + heur;
                     pq.push(make_pair(dist[v], v));
+                    parent[v] = u; 
                 }
             }
-        }
+        
 
+            // /* print actual table */
+            //     if (!visited[u]) {
+            //         cout << u->data << setw(10);
+            //         for (auto e : dist) {
+            //             if (e.second == INF) {
+            //                 cout << setw(10) << "INF" << setw(10);
+            //             } else {
+            //                 cout << setw(10) << e.second << setw(10);
+            //             }   
+            //         }
+            //         cout << endl;
+            //     }
+            //     visited[u] = true; /* print actual table */
+        }
+        cout << "\r";
+        
+        // displayparents();
+        displayPath();
         return dist;
     }
 
@@ -111,6 +139,27 @@ class AStar {
                 cout << setw(3) << e.first->data << setw(10) << e.second << endl;
             }
         }
+    }
+
+    void displayparents() {
+        /* print parents */
+        cout << "Vertex  "
+             << "Parent  " << endl;
+        for (auto p : parent) {
+            cout << setw(3) << p.first->data << setw(10) << p.second->data << endl;
+        }
+    }
+
+    void displayPath() {
+        cout << "Path: " ;
+        cout << setw(3) << this->v_dest->data << setw(3);
+        Vertex<TV, TE>* tmp = parent.at(this->v_dest);
+        for (auto p : parent) {
+            cout << setw(3) << " <- " << tmp->data << setw(3);
+            tmp = parent.at(tmp);
+            if (tmp == this->v_init) break;
+        }
+        cout << setw(3) << " <- " << this->v_init->data << endl;
     }
 };
 
