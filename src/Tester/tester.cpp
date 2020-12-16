@@ -40,81 +40,81 @@ void Tester::executeExamples() {
 }
 
 void Tester::executeParser() {
-    // cout << "================================================" << endl;
-    // cout << "Test Parser" << endl;
-    // cout << "================================================" << endl;
+    cout << "================================================" << endl;
+    cout << "Test Parser" << endl;
+    cout << "================================================" << endl;
 
-    // // AirportParser airportsparse(
-    // //     "D:\\Documentos\\AED-graph-project-electrogatos\\src\\Parser\\Data\\pe.json");
     // AirportParser airportsparse(
-    //     "/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
+    //     "D:\\Documentos\\AED-graph-project-electrogatos\\src\\Parser\\Data\\pe.json");
+    AirportParser airportsparse(
+        "/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
+    cout << endl;
+    cout << "================================================" << endl;
+    cout << "uGraphMake" << endl;
+    cout << "================================================" << endl;
+    // uGraphMake
+    UnDirectedGraph<string, double> airports;
+    airportsparse.uGraphMake(airports);
     // cout << endl;
-    // cout << "================================================" << endl;
-    // cout << "uGraphMake" << endl;
-    // cout << "================================================" << endl;
-    // // uGraphMake
-    // UnDirectedGraph<string, double> airports;
-    // airportsparse.uGraphMake(airports);
-    // // cout << endl;
-    // cout << "\nDisplay unDirected Graph\n";
-    // airports.display();
+    cout << "\nDisplay unDirected Graph\n";
+    airports.display();
 
-    // cout << "\nfindById(6067 - Huanuco): " << std::boolalpha << airports.findById(6067) << endl;
+    cout << "\nfindById(6067 - Huanuco): " << std::boolalpha << airports.findById(6067) << endl;
 
-    // cout << "\ndisplayVertex(6067 - Huanuco)\n";
-    // cout << airports.displayVertex(6067) << endl;
+    cout << "\ndisplayVertex(6067 - Huanuco)\n";
+    cout << airports.displayVertex(6067) << endl;
 
-    // cout << "\nexecKruskal()\n";
-    // Kruskal<string, double> kruskal(airports);
-    // UnDirectedGraph<string, double> mst = kruskal.apply();
-    // mst.display();
+    cout << "\nexecKruskal()\n";
+    Kruskal<string, double> kruskal(airports);
+    UnDirectedGraph<string, double> mst = kruskal.apply();
+    mst.display();
 
-    // cout << "\nisConnected(): " << std::boolalpha << airports.isConnected() << endl;
+    cout << "\nisConnected(): " << std::boolalpha << airports.isConnected() << endl;
 
-    // cout << "\nexecPrim()\n";
-    // Prim<string, double> Prim(airports, "2789");
-    // UnDirectedGraph<string, double> mstp = Prim.apply();
-    // mstp.display();
+    cout << "\nexecPrim()\n";
+    Prim<string, double> Prim(airports, "2789");
+    UnDirectedGraph<string, double> mstp = Prim.apply();
+    mstp.display();
 
-    // cout << "\nexecDFS()\n";
-    // DFS<string, double> DFS(airports);
-    // Graph<string, double>* dsf = new UnDirectedGraph<string, double>();
-    // // UnDirectedGraph<string, float> dsf = DFS.apply();
-    // dsf = DFS.apply();
-    // dsf->display();
+    cout << "\nexecDFS()\n";
+    DFS<string, double> DFS(airports, "2789");
+    Graph<string, double>* dsf = new UnDirectedGraph<string, double>();
+    // UnDirectedGraph<string, float> dsf = DFS.apply();
+    dsf = DFS.apply();
+    dsf->display();
 
-    // cout << "\nexecBFS()\n";
-    // BFS<string, double> BFS(airports);
-    // Graph<string, double>* bfs = new UnDirectedGraph<string, double>();
-    // // UnDirectedGraph<string, float> bfs = BFS.apply();
-    // bfs = BFS.apply();
-    // bfs->display();
+    cout << "\nexecBFS()\n";
+    BFS<string, double> BFS(airports, "2789");
+    Graph<string, double>* bfs = new UnDirectedGraph<string, double>();
+    // UnDirectedGraph<string, float> bfs = BFS.apply();
+    bfs = BFS.apply();
+    bfs->display();
 
-    // cout << "\nDensity: \n";
-    // cout << airports.density();
+    cout << "\nDensity: \n";
+    cout << airports.density();
 
-    // cout << "\nisDense(): " << std::boolalpha << airports.isDense() << endl;
+    cout << "\nisDense(): " << std::boolalpha << airports.isDense() << endl;
 
-    // cout << "\nempty(): " << std::boolalpha << airports.empty() << endl;
+    cout << "\nempty(): " << std::boolalpha << airports.empty() << endl;
 
-    // cout << "\nDelete Vertex id: 2789 (Lima)\n";
-    // airports.deleteVertex(2789);
-    // airports.display();
+    cout << "\nDelete Vertex id: 2789 (Lima)\n";
+    airports.deleteVertex(2789);
+    airports.display();
 
-    // cout << "\nDelete Edge Pucallpa - Iquitos \n";
-    // airports.deleteEdge(2781, 2801);
-    // airports.display();
+    cout << "\nDelete Edge Pucallpa - Iquitos \n";
+    airports.deleteEdge(2781, 2801);
+    airports.display();
 
+    cout << endl;
+    cout << "================================================" << endl;
+    cout << "dGraphMake" << endl;
+    cout << "================================================" << endl;
+    // dGraphMake
+    DirectedGraph<string, double> airports_d;
+    airportsparse.dGraphMake(airports_d);
     // cout << endl;
-    // cout << "================================================" << endl;
-    // cout << "dGraphMake" << endl;
-    // cout << "================================================" << endl;
-    // // dGraphMake
-    // DirectedGraph<string, double> airports_d;
-    // airportsparse.dGraphMake(airports_d);
-    // // cout << endl;
-    // cout << "\nDisplay Directed Graph\n";
-    // airports_d.display();
+    cout << "\nDisplay Directed Graph\n";
+    airports_d.display();
 }
 
 /* First Testes */
