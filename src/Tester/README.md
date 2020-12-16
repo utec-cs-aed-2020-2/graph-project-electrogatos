@@ -497,3 +497,48 @@ Recorrido BFS:
     F         6
     G        12
 ```
+
+
+### A*
+- https://www.101computing.net/a-star-search-algorithm/
+```
+
+    graph.insertVertex(1, "A");
+    graph.insertVertex(2, "B");
+    graph.insertVertex(3, "C");
+    graph.insertVertex(4, "D");
+    graph.insertVertex(5, "E");
+    graph.insertVertex(6, "F");
+    graph.insertVertex(7, "Z");
+    graph.createEdge(1, 3, 3); //A-C
+    graph.createEdge(1, 2, 4); //A-B
+    graph.createEdge(2, 6, 5); //B-F
+    graph.createEdge(2, 5, 12); //B-E
+    graph.createEdge(3, 4, 7); //C-D
+    graph.createEdge(3, 5, 10); //C-E
+    graph.createEdge(4, 5, 2); //D-E
+    graph.createEdge(5, 7, 5); //E-Z
+    graph.createEdge(6, 7, 16); //F-Z       
+
+
+execAStar()
+Inicio: A ---> Destino: Z
+                   A         B         D         F         Z         C         E
+         A         0         4       INF       INF       INF         3       INF
+         C         0         4        10       INF       INF         3        13
+         B         0         4        10         9       INF         3        13
+         F         0         4        10         9        25         3        13
+         D         0         4        10         9        25         3        12
+         E         0         4        10         9        17         3        12
+         Z         0         4        10         9        17         3        12
+Path:   Z <- E <- D <- C <- A
+Vertex   Distance  
+  A         0
+  B         4
+  D        10
+  F         9
+  Z        17
+  C         3
+  E        12
+
+```
