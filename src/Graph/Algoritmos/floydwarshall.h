@@ -52,7 +52,7 @@ class FloydWarshall {
                     }
 
                     if (weights[j][i] + weights[i][k] < weights[j][k]) {
-                        weights[j][k] = weights[j][i] + weights[i][j];
+                        weights[j][k] = weights[j][i] + weights[i][k];
                         routes[j][k] = i;
                     }
                 }
@@ -66,7 +66,7 @@ class FloydWarshall {
         cout << "\n Pesos: \n";
         printMatrix(weights, s);
         cout << "\n Rutas: \n";
-        printMatrix(routes, s);
+        printMatrix_r(routes, s);
     }
 
     ~FloydWarshall() {
@@ -108,8 +108,7 @@ class FloydWarshall {
                     matrix[i][j] = MATRIX_INIT_ZERO;
                 } else {
                     TE w = this->Graph->getweigthEdge(i + 1, j + 1);
-
-                    matrix[i][j] = (w != -1) ? w : MATRIX_INIT_INF;
+                    matrix[i][j] = (w != -1.5) ? w : MATRIX_INIT_INF;
                 }
             }
         }
@@ -123,6 +122,19 @@ class FloydWarshall {
                     cout << "INF";
                 else
                     cout << matrix[i][j];
+                cout << "\t";
+            }
+            cout << endl;
+        }
+    }
+
+    void printMatrix_r(TE** matrix, int size) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (matrix[i][j] == MATRIX_INIT_INF)
+                    cout << "INF";
+                else
+                    cout << matrix[i][j] + 1;
                 cout << "\t";
             }
             cout << endl;
