@@ -7,8 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../undirectedGraph.h"
 #include "../graph.h"
+#include "../undirectedGraph.h"
 
 using namespace std;
 
@@ -16,12 +16,12 @@ template <typename TV, typename TE>
 class DFS {
    public:
     // UnDirectedGraph<TV, TE> Graph;
-    Graph<TV, TE> *Graph;
-    ::Graph<TV, TE> *DFSGraph;
+    Graph<TV, TE>* Graph;
+    ::Graph<TV, TE>* DFSGraph;
     Vertex<TV, TE>* v_init;
     list<TV> RecorridoDFS;
 
-    DFS(::Graph<TV, TE> &Graph, TV init) {//Tambien funciona para grafo dirigido
+    DFS(::Graph<TV, TE>& Graph, TV init) {  // Tambien funciona para grafo dirigido
         this->Graph = &Graph;
         if (this->Graph->type == 0) {
             this->DFSGraph = new UnDirectedGraph<TV, TE>();
@@ -34,7 +34,7 @@ class DFS {
         }
     };
 
-    ::Graph<TV, TE>*apply(){
+    ::Graph<TV, TE>* apply() {
         // UnDirectedGraph<TV, TE> DFSGraph;
         unordered_map<Vertex<TV, TE>*, bool> visited;
 
@@ -46,55 +46,43 @@ class DFS {
         }
 
         // Para cada vértice en el árbol
-        // for (auto itr_new : this->Graph->vertexes) { // para grafos no conexos
-            // if (!visited[itr_new.second]) {
-                stack<Vertex<TV, TE>*> stack;
-                // Se coloca el vértice actual como visitado y se coloca en la pila
-                // cout << "Incio: " << this->Graph->vertexes.begin()->second->data << endl;
-                // stack.push(this->Graph->vertexes.begin()->second);
-                // visited[this->Graph->vertexes.begin()->second] = true;
+        stack<Vertex<TV, TE>*> stack;
 
-                cout << "Incio: " << this->v_init->data << endl;
-                visited[this->v_init] = true;
-                stack.push(this->v_init);
+        // Se coloca el vértice actual como visitado y se coloca en la pila
+        cout << "Incio: " << this->v_init->data << endl;
+        visited[this->v_init] = true;
+        stack.push(this->v_init);
 
-                while (!stack.empty()) {
-                    // Se saca de la pila el vértice
-                    Vertex<TV, TE>* v = stack.top();
-                    cout << " Nodo pop stack: " << v->data << endl;
-                    this->RecorridoDFS.push_back(v->data);
-                    stack.pop();
+        while (!stack.empty()) {
+            // Se saca de la pila el vértice
+            Vertex<TV, TE>* v = stack.top();
+            cout << " Nodo pop stack: " << v->data << endl;
+            this->RecorridoDFS.push_back(v->data);
+            stack.pop();
 
-                    // if (!visited[v]) {
-                    //     visited[v] = true;
-                    // }
-                    // Para cada vértice adyacente de v
-                    //--> si no ha sido visitado se marca como visitado y se coloca en la pila
-                    for (auto edg : v->edges) {
-                        // visited[edg->vertexes[1]] << endl;
-                        if (!visited[edg->vertexes[1]]) {
-                            cout << "  Nodo push stack: " << edg->vertexes[1]->data << endl;
-                            visited[edg->vertexes[1]] = true;
-                            stack.push(edg->vertexes[1]);
-                            // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
-                            DFSGraph->createEdge(this->Graph->findByVertex(edg->vertexes[0]),
-                                                this->Graph->findByVertex(edg->vertexes[1]), 1);
-                        }
-                    }
+            // Para cada vértice adyacente de v
+            //--> si no ha sido visitado se marca como visitado y se coloca en la pila
+            for (auto edg : v->edges) {
+                if (!visited[edg->vertexes[1]]) {
+                    cout << "  Nodo push stack: " << edg->vertexes[1]->data << endl;
+                    visited[edg->vertexes[1]] = true;
+                    stack.push(edg->vertexes[1]);
+                    // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
+                    DFSGraph->createEdge(this->Graph->findByVertex(edg->vertexes[0]),
+                                         this->Graph->findByVertex(edg->vertexes[1]), 1);
                 }
-            // }
-        // }
+            }
+        }
         return DFSGraph;
     }
 
-    void displayresult(){
+    void displayresult() {
         cout << "Recorrido DFS: " << endl;
         for (auto e : RecorridoDFS) {
-            cout << " " << e << " ->" ;
+            cout << " " << e << " ->";
         }
         cout << endl;
     }
-
 };
 
 #endif
