@@ -191,6 +191,113 @@ DirectedGraph<char, float> graph;
     E         1
 ```
 
+### Floy Warshal
+- https://www.youtube.com/watch?v=4OQeCuLYj-4&t=88s
+```
+
+// // Floyd–Warshall
+    graph.insertVertex(1, '1');
+    graph.insertVertex(2, '2');
+    graph.insertVertex(3, '3');
+    graph.insertVertex(4, '4');
+    graph.createEdge(2, 1, 4);   // 2 - 1 | 4
+    graph.createEdge(1, 3, -2);  // 1 - 3 | -2
+    graph.createEdge(2, 3, 3);   // 2 - 3 | 3
+    graph.createEdge(4, 2, -1);  // 4 - 2 | -1
+    graph.createEdge(3, 4, 2);   // 3 - 4 | 2
+
+
+execFloydWarshall()
+Size: 4
+0 0 0
+0 1 -1.5
+0 2 -2
+0 3 -1.5
+1 0 4
+1 1 0
+1 2 3
+1 3 -1.5
+2 0 -1.5
+2 1 -1.5
+2 2 0
+2 3 2
+3 0 -1.5
+3 1 -1
+3 2 -1.5
+3 3 0
+
+ Pesos: 
+0       -1      -2      0
+4       0       2       4
+5       1       0       2
+3       -1      1       0
+
+ Rutas: 
+0       3       2       2
+0       0       0       2
+3       3       0       3
+1       1       1       0
+```
+
+- PPT Recorrido de grafos
+```
+    graph.insertVertex(1, '1');
+    graph.insertVertex(2, '2');
+    graph.insertVertex(3, '3');
+    graph.insertVertex(4, '4');
+    graph.insertVertex(5, '5');
+    graph.createEdge(2, 1, 3);   // 2 - 1 | 3
+    graph.createEdge(1, 3, 6);   // 1 - 3 | 6
+    graph.createEdge(1, 4, 3);   // 1 - 4 | 3
+    graph.createEdge(3, 4, 2);   // 3 - 4 | 2
+    graph.createEdge(4, 3, 1);   // 4 - 3 | 1
+    graph.createEdge(4, 2, 1);   // 4 - 2 | 1
+    graph.createEdge(5, 2, 4);   // 5 - 2 | 4
+    graph.createEdge(5, 4, 2);   // 5 - 4 | 2
+
+execFloydWarshall()
+Size: 5
+0 0 0
+0 1 -1.5
+0 2 6
+0 3 3
+0 4 -1.5
+1 0 3
+1 1 0
+1 2 -1.5
+1 3 -1.5
+1 4 -1.5
+2 0 -1.5
+2 1 -1.5
+2 2 0
+2 3 2
+2 4 -1.5
+3 0 -1.5
+3 1 1
+3 2 1
+3 3 0
+3 4 -1.5
+4 0 -1.5
+4 1 4
+4 2 -1.5
+4 3 2
+4 4 0
+
+ Pesos: 
+0       4       4       3       INF
+3       0       7       6       INF
+6       3       0       2       INF
+4       1       1       0       INF
+6       3       3       2       0
+
+ Rutas: 
+1       4       4       4       5
+1       1       4       1       5
+4       4       1       4       5
+2       2       3       1       5
+4       4       4       4       1
+```
+
 ## Grafo no-dirigido
 
 ### Prim y Kruskal

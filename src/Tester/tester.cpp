@@ -124,93 +124,108 @@ void testDirectGraph() {
 
     // // test BFS Y DFS geekforgeeks
     // // DFS: https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
-    // graph.insertVertex(1, '0');
-    // graph.insertVertex(2, '1');
-    // graph.insertVertex(3, '2');
-    // graph.insertVertex(4, '3');
-    // graph.createEdge(1, 3, 4);// 0-2
-    // graph.createEdge(3, 1, 4);// 2-0
-    // graph.createEdge(1, 2, 4);// 0-1
-    // graph.createEdge(2, 3, 4);// 1-2
-    // graph.createEdge(2, 4, 4);// 1-3
-    // graph.createEdge(3, 3, 4);// 3-3
+    graph.insertVertex(1, '0');
+    graph.insertVertex(2, '1');
+    graph.insertVertex(3, '2');
+    graph.insertVertex(4, '3');
+    graph.createEdge(1, 3, 4);// 0-2
+    graph.createEdge(3, 1, 4);// 2-0
+    graph.createEdge(1, 2, 4);// 0-1
+    graph.createEdge(2, 3, 4);// 1-2
+    graph.createEdge(2, 4, 4);// 1-3
+    graph.createEdge(3, 3, 4);// 3-3
 
     // // Floyd–Warshall
-    graph.insertVertex(1, '1');
-    graph.insertVertex(2, '2');
-    graph.insertVertex(3, '3');
-    graph.insertVertex(4, '4');
-    graph.createEdge(2, 1, 4);   // 2 - 1 | 4
-    graph.createEdge(1, 3, -2);  // 1 - 3 | -2
-    graph.createEdge(2, 3, 3);   // 2 - 3 | 3
-    graph.createEdge(4, 2, -1);  // 4 - 2 | -1
-    graph.createEdge(3, 4, 2);   // 3 - 4 | 2
+    // graph.insertVertex(1, '1');
+    // graph.insertVertex(2, '2');
+    // graph.insertVertex(3, '3');
+    // graph.insertVertex(4, '4');
+    // graph.createEdge(2, 1, 4);   // 2 - 1 | 4
+    // graph.createEdge(1, 3, -2);  // 1 - 3 | -2
+    // graph.createEdge(2, 3, 3);   // 2 - 3 | 3
+    // graph.createEdge(4, 2, -1);  // 4 - 2 | -1
+    // graph.createEdge(3, 4, 2);   // 3 - 4 | 2
 
-    // // display as adjacency list
-    // /*
-    //  E:  I(29), J(5), A(11)
-    //  J:  A(14), F(4)
-    // */
-    // graph.display();
+    // // Floyd–Warshall
+    // graph.insertVertex(1, '1');
+    // graph.insertVertex(2, '2');
+    // graph.insertVertex(3, '3');
+    // graph.insertVertex(4, '4');
+    // graph.insertVertex(5, '5');
+    // graph.createEdge(2, 1, 3);   // 2 - 1 | 3
+    // graph.createEdge(1, 3, 6);   // 1 - 3 | 6
+    // graph.createEdge(1, 4, 3);   // 1 - 4 | 3
+    // graph.createEdge(3, 4, 2);   // 3 - 4 | 2
+    // graph.createEdge(4, 3, 1);   // 4 - 3 | 1
+    // graph.createEdge(4, 2, 1);   // 4 - 2 | 1
+    // graph.createEdge(5, 2, 4);   // 5 - 2 | 4
+    // graph.createEdge(5, 4, 2);   // 5 - 4 | 2
 
-    // // True, False
-    // cout << "\nfindById(6): " << std::boolalpha << graph.findById(6) << endl;
+    // display as adjacency list
+    /*
+     E:  I(29), J(5), A(11)
+     J:  A(14), F(4)
+    */
+    graph.display();
 
-    // // display object
-    // /*
-    //  E:  I(29), J(5), A(11)
-    // */
-    // cout << "\ndisplayVertex(6)\n";
-    // cout << graph.displayVertex(6) << endl;
+    // True, False
+    cout << "\nfindById(6): " << std::boolalpha << graph.findById(6) << endl;
 
-    // cout << "isStronglyConnected(): " << std::boolalpha << graph.isStronglyConnected() << endl;
+    // display object
+    /*
+     E:  I(29), J(5), A(11)
+    */
+    cout << "\ndisplayVertex(6)\n";
+    cout << graph.displayVertex(6) << endl;
 
-    // cout << "\nexecDFS()\n";
-    // DFS<char, float> DFS(graph, '2');
-    // Graph<char, float>* dsf = new DirectedGraph<char, float>();
-    // dsf = DFS.apply();
-    // dsf->display();
-    // DFS.displayresult();
+    cout << "isStronglyConnected(): " << std::boolalpha << graph.isStronglyConnected() << endl;
 
-    // cout << "\nexecBFS()\n";
-    // BFS<char, float> BFS(graph, '2');
-    // Graph<char, float>* bfs = new DirectedGraph<char, float>();
-    // bfs = BFS.apply();
-    // bfs->display();
-    // BFS.displayresult();
+    cout << "\nexecDFS()\n";
+    DFS<char, float> DFS(graph, '2');
+    Graph<char, float>* dsf = new DirectedGraph<char, float>();
+    dsf = DFS.apply();
+    dsf->display();
+    DFS.displayresult();
 
-    // cout << "\nexecDijkstra()\n";
-    // Dijkstra<char, float> Dijkstra(graph, '2');
-    // // Graph<char, float> *dijs = new DirectedGraph<char, float>();
-    // unordered_map<Vertex<char, float>*, float> rd = Dijkstra.apply();
-    // Dijkstra.displayresult();
+    cout << "\nexecBFS()\n";
+    BFS<char, float> BFS(graph, '2');
+    Graph<char, float>* bfs = new DirectedGraph<char, float>();
+    bfs = BFS.apply();
+    bfs->display();
+    BFS.displayresult();
 
-    // cout << "\nexecBellmanFord()\n";
-    // BellmanFord<char, float> BellmanFord(graph, '2');
-    // // Graph<char, float> *bf = new DirectedGraph<char, float>();
-    // unordered_map<Vertex<char, float>*, float> rb = BellmanFord.apply();
-    // BellmanFord.displayresult();
+    cout << "\nexecDijkstra()\n";
+    Dijkstra<char, float> Dijkstra(graph, '2');
+    // Graph<char, float> *dijs = new DirectedGraph<char, float>();
+    unordered_map<Vertex<char, float>*, float> rd = Dijkstra.apply();
+    Dijkstra.displayresult();
 
-    // cout << "\nDelete Vertex id: 4 (3)\n";
-    // graph.deleteVertex(4);
-    // graph.display();
+    cout << "\nexecBellmanFord()\n";
+    BellmanFord<char, float> BellmanFord(graph, '2');
+    // Graph<char, float> *bf = new DirectedGraph<char, float>();
+    unordered_map<Vertex<char, float>*, float> rb = BellmanFord.apply();
+    BellmanFord.displayresult();
 
-    // cout << "\nDelete Edge 0 - 2 \n";
-    // graph.deleteEdge(1, 3);
-    // graph.display();
+    cout << "\nDelete Vertex id: 4 (3)\n";
+    graph.deleteVertex(4);
+    graph.display();
 
-    // cout << "\nDensity: \n";
-    // cout << graph.density();
+    cout << "\nDelete Edge 0 - 2 \n";
+    graph.deleteEdge(1, 3);
+    graph.display();
 
-    // cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
+    cout << "\nDensity: \n";
+    cout << graph.density();
 
-    // cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
+    cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
+
+    cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
 
     // corregir
     cout << "\nexecFloydWarshall()\n";
     FloydWarshall<char, float> FloydWarshall(graph);
-    Graph<char, float>* dsf = new DirectedGraph<char, float>();
-    dsf = FloydWarshall.apply();
+    Graph<char, float>* fsf = new DirectedGraph<char, float>();
+    fsf = FloydWarshall.apply();
     FloydWarshall.displayresult();
 }
 
@@ -265,45 +280,45 @@ void testUnDirectGraph() {
     */
     graph.display();
 
-    // // True, False
-    // cout << "\nfindById(3): " << std::boolalpha << graph.findById(3) << endl;
+    // True, False
+    cout << "\nfindById(3): " << std::boolalpha << graph.findById(3) << endl;
 
-    // // display object
-    // /*
-    //  2: 0(6), 1(4), 3(1)
-    // */
-    // cout << "\ndisplayVertex(3)\n";
-    // cout << graph.displayVertex(3) << endl;
+    // display object
+    /*
+     2: 0(6), 1(4), 3(1)
+    */
+    cout << "\ndisplayVertex(3)\n";
+    cout << graph.displayVertex(3) << endl;
 
-    // cout << "\nexecKruskal()\n";
-    // Kruskal<string, float> kruskal(graph);
-    // UnDirectedGraph<string, float> mstk = kruskal.apply();
-    // mstk.display();
+    cout << "\nexecKruskal()\n";
+    Kruskal<string, float> kruskal(graph);
+    UnDirectedGraph<string, float> mstk = kruskal.apply();
+    mstk.display();
 
-    // cout << "\nexecPrim()\n";
-    // Prim<string, float> Prim(graph, "0");
-    // UnDirectedGraph<string, float> mstp = Prim.apply();
-    // mstp.display();
+    cout << "\nexecPrim()\n";
+    Prim<string, float> Prim(graph, "A");
+    UnDirectedGraph<string, float> mstp = Prim.apply();
+    mstp.display();
 
-    // cout << "\nexecDFS()\n";
-    // DFS<string, float> DFS(graph, "0");
-    // Graph<string, float>* dsf = new UnDirectedGraph<string, float>();
-    // dsf = DFS.apply();
-    // dsf->display();
-    // DFS.displayresult();
+    cout << "\nexecDFS()\n";
+    DFS<string, float> DFS(graph, "A");
+    Graph<string, float>* dsf = new UnDirectedGraph<string, float>();
+    dsf = DFS.apply();
+    dsf->display();
+    DFS.displayresult();
 
-    // cout << "\nexecBFS()\n";
-    // BFS<string, float> BFS(graph, "0");
-    // Graph<string, float>* bfs = new UnDirectedGraph<string, float>();
-    // bfs = BFS.apply();
-    // bfs->display();
-    // BFS.displayresult();
+    cout << "\nexecBFS()\n";
+    BFS<string, float> BFS(graph, "A");
+    Graph<string, float>* bfs = new UnDirectedGraph<string, float>();
+    bfs = BFS.apply();
+    bfs->display();
+    BFS.displayresult();
 
-    // cout << "\nexecDijkstra()\n";
-    // Dijkstra<string, float> Dijkstra(graph, "0");
-    // // Graph<string, float> *dijs = new UnDirectedGraph<string, float>();
-    // unordered_map<Vertex<string, float>*, float> result = Dijkstra.apply();
-    // Dijkstra.displayresult();
+    cout << "\nexecDijkstra()\n";
+    Dijkstra<string, float> Dijkstra(graph, "A");
+    // Graph<string, float> *dijs = new UnDirectedGraph<string, float>();
+    unordered_map<Vertex<string, float>*, float> result = Dijkstra.apply();
+    Dijkstra.displayresult();
 
     cout << "\nexecAStar()\n";
     AStar<string, float> AStar(graph, "A", "Z");
@@ -311,20 +326,20 @@ void testUnDirectGraph() {
     unordered_map<Vertex<string, float>*, float> ra = AStar.apply();
     AStar.displayresult();
 
-    // cout << "\nisConnected(): " << std::boolalpha << graph.isConnected() << endl;
+    cout << "\nisConnected(): " << std::boolalpha << graph.isConnected() << endl;
 
-    // cout << "\nDensity: \n";
-    // cout << graph.density();
+    cout << "\nDensity: \n";
+    cout << graph.density();
 
-    // cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
+    cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
 
-    // cout << "\nDelete Vertex id: 5 (4)\n";
-    // graph.deleteVertex(5);
-    // graph.display();
+    cout << "\nDelete Vertex id: 5 (4)\n";
+    graph.deleteVertex(5);
+    graph.display();
 
-    // cout << "\nDelete Edge 2 - 1 \n";
-    // graph.deleteEdge(3, 2);
-    // graph.display();
+    cout << "\nDelete Edge 2 - 1 \n";
+    graph.deleteEdge(3, 2);
+    graph.display();
 
-    // cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
+    cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
 }
