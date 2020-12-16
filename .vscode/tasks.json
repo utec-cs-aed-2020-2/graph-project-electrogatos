@@ -63,7 +63,7 @@
 					"${workspaceFolder}/build/lin/main.out"
 				]
 			},
-			"dependsOn": ["OutDir"]
+			// "dependsOn": ["OutDir"]
 		},
 		{
 			"label": "OutDir",

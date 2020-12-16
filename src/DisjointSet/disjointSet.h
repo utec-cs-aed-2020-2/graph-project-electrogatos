@@ -54,8 +54,10 @@ class DisjoinSet {
     }
 
     void Union(int x, int y) {  // O(Log(n)) + O(1)
-        int xset = Find(x);
-        int yset = Find(y);
+        // int xset = Find(x);
+        // int yset = Find(y);
+        int xset = x;
+        int yset = y;
 
         if (xset == yset) return;
 
@@ -66,8 +68,8 @@ class DisjoinSet {
         }
 
         else {
-            this->parent[yset] = xset;
-            this->rank[xset] = this->rank[xset] + 1;
+            this->parent[xset] = yset;
+            this->rank[yset] = this->rank[yset] + 1;
         }
         this->succUnions++;
     }
@@ -118,27 +120,28 @@ class DisjoinSet {
         cout << "-------PRINTSETS-------" << endl;
         cout << "Total Sets: " << sets() << endl;
 
-        cout << "Index:  " << setw(2);
+        cout << setw(10);
+        cout << "Index:  " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << i << setw(2);
+            cout << i << setw(10);
         }
         cout << endl;
 
-        cout << "Data:   " << setw(2);
+        cout << "Data:   " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << this->dat[i] << setw(2);
+            cout << this->dat[i] << setw(10);
         }
         cout << endl;
 
-        cout << "Parent: " << setw(2);
+        cout << "Parent: " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << this->parent[i] << setw(2);
+            cout << this->parent[i] << setw(10);
         }
         cout << endl;
 
-        cout << "Rank:   " << setw(2);
+        cout << "Rank:   " << setw(10);
         for (int i = 0; i < n; ++i) {
-            cout << this->rank[i] << setw(2);
+            cout << this->rank[i] << setw(10);
         }
         cout << endl;
         cout << "-----------------------" << endl;
