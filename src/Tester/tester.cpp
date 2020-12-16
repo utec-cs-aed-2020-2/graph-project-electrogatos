@@ -8,7 +8,7 @@ void Tester::executeExamples() {
     cout << "================================================" << endl;
     cout << "Test UnDirected Graph" << endl;
     cout << "================================================" << endl;
-    // testUnDirectGraph();
+    testUnDirectGraph();
     cout << endl;
 
     cout << "================================================" << endl;
