@@ -18,15 +18,18 @@ class BellmanFord {
    public:
     Graph<TV, TE> *Graph;
     ::Graph<TV, TE> *BFGraph;
+    Vertex<TV, TE>* v_init;
     unordered_map<Vertex<TV, TE>*, TE> dist;
     
 
-    BellmanFord(::Graph<TV, TE> &Graph) {//tambien sobre grafo dirigido
+    BellmanFord(::Graph<TV, TE> &Graph, TV init) {//tambien sobre grafo dirigido
         this->Graph = &Graph;
         if (this->Graph->type == 0) {
             this->BFGraph = new UnDirectedGraph<TV, TE>();
+            this->v_init = this->Graph->findByData(init);
         } else if (this->Graph->type == 1) {
             this->BFGraph = new DirectedGraph<TV, TE>();
+            this->v_init = this->Graph->findByData(init);
         } else {
             cout << "Error" << endl;
         }
@@ -45,15 +48,17 @@ class BellmanFord {
             BFGraph->insertVertex(itr->first, itr->second->data);
         }
         
-        Vertex<TV, TE>* init = this->Graph->vertexes.at(1);
-        cout << "Incio: " << init->data << endl;
-        dist[init] = 0;
+        // Vertex<TV, TE>* init = this->Graph->vertexes.at(1);
+        // Vertex<TV, TE>* init = this->Graph->vertexes.begin()->second;
+        // cout << "Incio: " << init->data << endl;
+        cout << "Incio: " << this->v_init->data << endl;
+        dist[this->v_init] = 0;
 
         // busca el camino más corto por cada edge en cada vertex
         for (int i = 1; i <= s - 1; i++) { 
             for (itr = this->Graph->vertexes.begin(); itr != this->Graph->vertexes.end(); itr++) {
                 for (auto edg : itr->second->edges) { 
-                // for (auto edg : init->edges) { 
+                // for (auto edg : this->v_init->edges) { 
                     Vertex<TV, TE>* u = edg->vertexes[0]; // src
                     Vertex<TV, TE>* v = edg->vertexes[1]; // dest
                     TE weight = edg->weight; 
@@ -65,7 +70,7 @@ class BellmanFord {
         }
 
         // Verificar ciclos negativos
-        for (auto edg : init->edges) { 
+        for (auto edg : this->v_init->edges) { 
             Vertex<TV, TE>* u = edg->vertexes[0]; 
             Vertex<TV, TE>* v = edg->vertexes[1]; 
             TE weight = edg->weight; 

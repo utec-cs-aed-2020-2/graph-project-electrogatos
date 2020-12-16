@@ -68,11 +68,14 @@ class Kruskal {
 
             // Si tienen diferente parent se realiza la union
             if (x != y) {
+                // cout << " Union: (" << x << ", " << y << ")" << endl;
                 ds->Union(x, y);
                 // Se agrega la solución al MST Graph
                 BFSGraph.createEdge(this->Graph.findByVertex(next_edge->vertexes[0]),
                                     this->Graph.findByVertex(next_edge->vertexes[1]), next_edge->weight);
             }
+
+            // ds->printSets(); // para mostrar la evolucion de los parents y rank
         }
         // ds->printSets();
         // cout << "Total Sets: " << ds->sets() << endl;

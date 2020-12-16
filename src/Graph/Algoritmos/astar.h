@@ -26,12 +26,20 @@ class AStar {
         this->Graph = &Graph;
         if (this->Graph->type == 0) {
             this->DGraph = new UnDirectedGraph<TV, TE>();
-            this->v_init = this->DGraph->findByData(init);
-            this->v_dest = this->DGraph->findByData(dest);
+            cout << "Inicio: " << init << " ---> Destino: " << dest << endl;
+            this->v_init = this->Graph->findByData(init);
+            this->v_dest = this->Graph->findByData(dest);
+            if (this->v_init == nullptr || this->v_dest == nullptr) {
+                throw "Init or Dest not in a graph";
+            }
         } else if (this->Graph->type == 1) {
             this->DGraph = new DirectedGraph<TV, TE>();
-            this->v_init = this->DGraph->findByData(init);
-            this->v_dest = this->DGraph->findByData(dest);
+            cout << "Inicio: " << init << " ---> Destino: " << dest << endl;
+            this->v_init = this->Graph->findByData(init);
+            this->v_dest = this->Graph->findByData(dest);
+            if (this->v_init == nullptr || this->v_dest == nullptr) {
+                throw "Init or Dest not in a graph";
+            }
         } else {
             cout << "Error" << endl;
         }
