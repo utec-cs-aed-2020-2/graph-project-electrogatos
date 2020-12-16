@@ -8,7 +8,7 @@ void Tester::executeExamples() {
     cout << "================================================" << endl;
     cout << "Test UnDirected Graph" << endl;
     cout << "================================================" << endl;
-    testUnDirectGraph();
+    // testUnDirectGraph();
     cout << endl;
 
     cout << "================================================" << endl;
@@ -123,82 +123,93 @@ void testDirectGraph() {
 
     // // test BFS Y DFS geekforgeeks
     // // DFS: https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
-    graph.insertVertex(1, '0');
-    graph.insertVertex(2, '1');
-    graph.insertVertex(3, '2');
-    graph.insertVertex(4, '3');
-    graph.createEdge(1, 3, 4);// 0-2
-    graph.createEdge(3, 1, 4);// 2-0
-    graph.createEdge(1, 2, 4);// 0-1
-    graph.createEdge(2, 3, 4);// 1-2
-    graph.createEdge(2, 4, 4);// 1-3
-    graph.createEdge(3, 3, 4);// 3-3
+    // graph.insertVertex(1, '0');
+    // graph.insertVertex(2, '1');
+    // graph.insertVertex(3, '2');
+    // graph.insertVertex(4, '3');
+    // graph.createEdge(1, 3, 4);// 0-2
+    // graph.createEdge(3, 1, 4);// 2-0
+    // graph.createEdge(1, 2, 4);// 0-1
+    // graph.createEdge(2, 3, 4);// 1-2
+    // graph.createEdge(2, 4, 4);// 1-3
+    // graph.createEdge(3, 3, 4);// 3-3
 
-    // display as adjacency list
-    /*
-     E:  I(29), J(5), A(11)
-     J:  A(14), F(4)
-    */
-    graph.display();
+    // // Floyd–Warshall
+    graph.insertVertex(1, '1');
+    graph.insertVertex(2, '2');
+    graph.insertVertex(3, '3');
+    graph.insertVertex(4, '4');
+    graph.createEdge(2, 1, 4);  // 2 - 1 | 4
+    graph.createEdge(1, 3, -2);  // 1 - 3 | -2
+    graph.createEdge(2, 3, 3);  // 2 - 3 | 3
+    graph.createEdge(4, 2, -1);  // 4 - 2 | -1
+    graph.createEdge(3, 4, 2);  // 3 - 4 | 2
 
-    // True, False
-    cout << "\nfindById(6): " << std::boolalpha << graph.findById(6) << endl;
+    // // display as adjacency list
+    // /*
+    //  E:  I(29), J(5), A(11)
+    //  J:  A(14), F(4)
+    // */
+    // graph.display();
 
-    // display object
-    /*
-     E:  I(29), J(5), A(11)
-    */
-    cout << "\ndisplayVertex(6)\n";
-    cout << graph.displayVertex(6) << endl;
+    // // True, False
+    // cout << "\nfindById(6): " << std::boolalpha << graph.findById(6) << endl;
 
-    cout << "isStronglyConnected(): " << std::boolalpha << graph.isStronglyConnected() << endl;
+    // // display object
+    // /*
+    //  E:  I(29), J(5), A(11)
+    // */
+    // cout << "\ndisplayVertex(6)\n";
+    // cout << graph.displayVertex(6) << endl;
 
-    cout << "\nexecDFS()\n";
-    DFS<char, float> DFS(graph, '2');
-    Graph<char, float>* dsf = new DirectedGraph<char, float>();
-    dsf = DFS.apply();
-    dsf->display();
-    DFS.displayresult();
+    // cout << "isStronglyConnected(): " << std::boolalpha << graph.isStronglyConnected() << endl;
 
-    cout << "\nexecBFS()\n";
-    BFS<char, float> BFS(graph, '2');
-    Graph<char, float>* bfs = new DirectedGraph<char, float>();
-    bfs = BFS.apply();
-    bfs->display();
-    BFS.displayresult();
+    // cout << "\nexecDFS()\n";
+    // DFS<char, float> DFS(graph, '2');
+    // Graph<char, float>* dsf = new DirectedGraph<char, float>();
+    // dsf = DFS.apply();
+    // dsf->display();
+    // DFS.displayresult();
 
-    cout << "\nexecDijkstra()\n";
-    Dijkstra<char, float> Dijkstra(graph, '2');
-    // Graph<char, float> *dijs = new DirectedGraph<char, float>();
-    unordered_map<Vertex<char, float>*, float> rd = Dijkstra.apply();
-    Dijkstra.displayresult();
+    // cout << "\nexecBFS()\n";
+    // BFS<char, float> BFS(graph, '2');
+    // Graph<char, float>* bfs = new DirectedGraph<char, float>();
+    // bfs = BFS.apply();
+    // bfs->display();
+    // BFS.displayresult();
 
-    cout << "\nexecBellmanFord()\n";
-    BellmanFord<char, float> BellmanFord(graph, '2');
-    // Graph<char, float> *bf = new DirectedGraph<char, float>();
-    unordered_map<Vertex<char, float>*, float> rb = BellmanFord.apply();
-    BellmanFord.displayresult();
+    // cout << "\nexecDijkstra()\n";
+    // Dijkstra<char, float> Dijkstra(graph, '2');
+    // // Graph<char, float> *dijs = new DirectedGraph<char, float>();
+    // unordered_map<Vertex<char, float>*, float> rd = Dijkstra.apply();
+    // Dijkstra.displayresult();
 
-    cout << "\nDelete Vertex id: 4 (3)\n";
-    graph.deleteVertex(4);
-    graph.display();
+    // cout << "\nexecBellmanFord()\n";
+    // BellmanFord<char, float> BellmanFord(graph, '2');
+    // // Graph<char, float> *bf = new DirectedGraph<char, float>();
+    // unordered_map<Vertex<char, float>*, float> rb = BellmanFord.apply();
+    // BellmanFord.displayresult();
 
-    cout << "\nDelete Edge 0 - 2 \n";
-    graph.deleteEdge(1, 3);
-    graph.display();
+    // cout << "\nDelete Vertex id: 4 (3)\n";
+    // graph.deleteVertex(4);
+    // graph.display();
 
-    cout << "\nDensity: \n";
-    cout << graph.density();
+    // cout << "\nDelete Edge 0 - 2 \n";
+    // graph.deleteEdge(1, 3);
+    // graph.display();
 
-    cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
+    // cout << "\nDensity: \n";
+    // cout << graph.density();
 
-    cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
+    // cout << "\nisDense(): " << std::boolalpha << graph.isDense() << endl;
 
-    // // corregir
-    // cout << "\nexecFloydWarshall()\n";
-    // FloydWarshall<char, float> FloydWarshall(graph);
-    // Graph<char, float> *dsf = new DirectedGraph<char, float>();
-    // dsf = FloydWarshall.apply();
+    // cout << "\nempty(): " << std::boolalpha << graph.empty() << endl;
+
+    // corregir
+    cout << "\nexecFloydWarshall()\n";
+    FloydWarshall<char, float> FloydWarshall(graph);
+    Graph<char, float> *dsf = new DirectedGraph<char, float>();
+    dsf = FloydWarshall.apply();
 }
 
 void testUnDirectGraph() {
@@ -224,7 +235,7 @@ void testUnDirectGraph() {
     // graph.createEdge(2, 5, 1);  // 1 - 4 | 1
     // graph.createEdge(4, 5, 1);  // 3 - 4 | 1
 
-    // A* test : https://www.101computing.net/a-star-search-algorithm/
+    // // A* test : https://www.101computing.net/a-star-search-algorithm/
     graph.insertVertex(1, "A");
     graph.insertVertex(2, "B");
     graph.insertVertex(3, "C");

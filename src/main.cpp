@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     cout << "================================================" << endl;
 
     Tester::executeExamples();
-    Tester::executeParser();
+    // Tester::executeParser();
 
     return EXIT_SUCCESS;
 }

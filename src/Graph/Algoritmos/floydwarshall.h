@@ -39,37 +39,39 @@ class FloydWarshall {
         // INIT matriz
         for (int i = 0; i < s; i++) {
             for (int j = 0; j < s; j++) {
-                // if (i == j) {
-                //     dist[i][j] = 0;
-                // }
-
-                TE w = this->Graph->getweigthEdge(i + 1, j + 1);
-                // TE w = -1;
-                if (w != -1) {
-                    dist[i][j] = w; 
+                if (i == j) {
+                    dist[i][j] = 0;
+                    cout << i << " " << j << " " << 0 << endl;
                 } else {
-                    dist[i][j] = 9999;
+                    TE w = this->Graph->getweigthEdge(i + 1, j + 1);
+                    cout << i << " " << j << " " << w << endl;
+                    // TE w = -1;
+                    if (w != -1) {
+                        dist[i][j] = w; 
+                    } else {
+                        dist[i][j] = 9999;
+                    }
                 }
             }
         } 
 
         // corregir
-        for (int k = 0; k < s; k++)  
-        {  
-            // Pick all vertices as source one by one  
-            for (int i = 0; i < s; i++)  
-            {  
-                // Pick all vertices as destination for the  
-                // above picked source  
-                for (int j = 0; j < s; j++)  
-                {  
-                    // If vertex k is on the shortest path from  
-                    // i to j, then update the value of dist[i][j]  
-                    if (dist[i][k] + dist[k][j] < dist[i][j])  
-                        dist[i][j] = dist[i][k] + dist[k][j];  
-                }  
-            }  
-        }
+        // for (int k = 0; k < s; k++)  
+        // {  
+        //     // Pick all vertices as source one by one  
+        //     for (int i = 0; i < s; i++)  
+        //     {  
+        //         // Pick all vertices as destination for the  
+        //         // above picked source  
+        //         for (int j = 0; j < s; j++)  
+        //         {  
+        //             // If vertex k is on the shortest path from  
+        //             // i to j, then update the value of dist[i][j]  
+        //             if (dist[i][k] + dist[k][j] < dist[i][j])  
+        //                 dist[i][j] = dist[i][k] + dist[k][j];  
+        //         }  
+        //     }  
+        // }
             
         // print
         for (int i = 0; i < s; i++)  
