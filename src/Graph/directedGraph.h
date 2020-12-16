@@ -247,7 +247,7 @@ class DirectedGraph : public Graph<TV, TE> {
             }
             // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
         }
-        return -1;
+        return -1.5;
     };
 };
 

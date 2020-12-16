@@ -256,7 +256,7 @@ class UnDirectedGraph : public Graph<TV, TE> {
             }
             // cout << edges_->vertexes[0]->data << " " << edges_->vertexes[1]->data << endl;
         }
-        return -1;
+        return -1.5;
     };
 
     /* Funcion para mostrar cada vértice del arbol con sus respectivas aristas */
