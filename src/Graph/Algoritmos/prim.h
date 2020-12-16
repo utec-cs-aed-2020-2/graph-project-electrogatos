@@ -96,10 +96,7 @@ class Prim {
 
         // El vertice por donde se comienza
         // Vertex<TV, TE>* tmp = this->Graph.vertexes.at(1);
-        // cout << tmp->data << endl;
-        // cout << "Vertex init: " << this->initvertex->data << endl;
         key[this->initvertex] = 0;
-        // parent[minor->vertexes[0]] = minor->vertexes[0]; // No es necesario
 
         // Para cada vertice
         for (auto itr_new : this->Graph.vertexes) {
