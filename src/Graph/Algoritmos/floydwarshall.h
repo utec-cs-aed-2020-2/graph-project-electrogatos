@@ -13,8 +13,16 @@
 
 using namespace std;
 
+#define MATRIX_INIT_ZERO 0
+#define MATRIX_INIT_INF  9999
+
 template <typename TV, typename TE>
 class FloydWarshall {
+   private:
+    TE** weights;
+    TE** routes;
+    int s;
+
    public:
     Graph<TV, TE>* Graph;
     ::Graph<TV, TE>* DGraph;
@@ -28,66 +36,105 @@ class FloydWarshall {
         } else {
             cout << "Error" << endl;
         }
+        this->s = this->Graph->vertexes.size();
+        cout << "Size: " << s << endl;
+
+        this->weights = initializeWeightsMatrix(s);
+        this->routes = initializeRoutesMatrix(s);
     };
 
     ::Graph<TV, TE>* apply() {
-        int s = this->Graph->vertexes.size();
-        cout << "Size: " << s << endl;
-        TE dist[s][s];
-
-        // INIT matriz
         for (int i = 0; i < s; i++) {
             for (int j = 0; j < s; j++) {
-                if (i == j) {
-                    dist[i][j] = 0;
-                    cout << i << " " << j << " " << 0 << endl;
-                } else {
-                    TE w = this->Graph->getweigthEdge(i + 1, j + 1);
-                    cout << i << " " << j << " " << w << endl;
-                    // TE w = -1;
-                    if (w != -1) {
-                        dist[i][j] = w;
-                    } else {
-                        dist[i][j] = 9999;
+                for (int k = 0; k < s; k++) {
+                    if (weights[j][i] == MATRIX_INIT_INF || weights[i][k] == MATRIX_INIT_INF) {
+                        continue;
+                    }
+
+                    if (weights[j][i] + weights[i][k] < weights[j][k]) {
+                        weights[j][k] = weights[j][i] + weights[i][j];
+                        routes[j][k] = i;
                     }
                 }
             }
         }
 
-        // corregir
-        // for (int k = 0; k < s; k++)
-        // {
-        //     // Pick all vertices as source one by one
-        //     for (int i = 0; i < s; i++)
-        //     {
-        //         // Pick all vertices as destination for the
-        //         // above picked source
-        //         for (int j = 0; j < s; j++)
-        //         {
-        //             // If vertex k is on the shortest path from
-        //             // i to j, then update the value of dist[i][j]
-        //             if (dist[i][k] + dist[k][j] < dist[i][j])
-        //                 dist[i][j] = dist[i][k] + dist[k][j];
-        //         }
-        //     }
-        // }
-
-        // print
-        for (int i = 0; i < s; i++) {
-            for (int j = 0; j < s; j++) {
-                if (dist[i][j] == 9999)
-                    cout << "-"
-                         << "     ";
-                else
-                    cout << dist[i][j] << "     ";
-            }
-            cout << endl;
-        }
-
         return DGraph;
     }
 
-    void displayresult() {}
+    void displayresult() {
+        cout << "\n Pesos: \n";
+        printMatrix(weights, s);
+        cout << "\n Rutas: \n";
+        printMatrix(routes, s);
+    }
+
+    ~FloydWarshall() {
+        destroyMatrix(weights, s);
+        destroyMatrix(routes, s);
+    }
+
+   private:
+    TE** initializeMatrix(int size) {
+        TE** matrix;
+        matrix = new TE*[size];
+        for (int i = 0; i < size; i++) {
+            matrix[i] = new TE[size];
+        }
+
+        return matrix;
+    }
+
+    TE** initializeRoutesMatrix(int size) {
+        TE** matrix = initializeMatrix(size);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i == j) {
+                    matrix[i][j] = MATRIX_INIT_ZERO;
+                } else {
+                    matrix[i][j] = j;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    TE** initializeWeightsMatrix(int size) {
+        TE** matrix = initializeMatrix(size);
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i == j) {
+                    matrix[i][j] = MATRIX_INIT_ZERO;
+                } else {
+                    TE w = this->Graph->getweigthEdge(i + 1, j + 1);
+
+                    matrix[i][j] = (w != -1) ? w : MATRIX_INIT_INF;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    void printMatrix(TE** matrix, int size) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (matrix[i][j] == MATRIX_INIT_INF)
+                    cout << "INF";
+                else
+                    cout << matrix[i][j];
+                cout << "\t";
+            }
+            cout << endl;
+        }
+    }
+
+    void destroyMatrix(TE** matrix, int size) {
+        for (int i = 0; i < size; i++) {
+            delete[] matrix[i];  // deletes an inner array of integer;
+        }
+        delete[] matrix;  // delete pointer holding array of pointers;
+    }
 };
 
 #endif

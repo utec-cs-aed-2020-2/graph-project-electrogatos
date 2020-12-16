@@ -47,7 +47,8 @@ void Tester::executeParser() {
     // AirportParser airportsparse(
     //     "D:\\Documentos\\AED-graph-project-electrogatos\\src\\Parser\\Data\\pe.json");
     AirportParser airportsparse(
-        "/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/graph-project-electrogatos/src/Parser/Data/pe.json");
+        "/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/"
+        "graph-project-electrogatos/src/Parser/Data/pe.json");
     cout << endl;
     cout << "================================================" << endl;
     cout << "uGraphMake" << endl;
@@ -139,11 +140,11 @@ void testDirectGraph() {
     graph.insertVertex(2, '2');
     graph.insertVertex(3, '3');
     graph.insertVertex(4, '4');
-    graph.createEdge(2, 1, 4);  // 2 - 1 | 4
+    graph.createEdge(2, 1, 4);   // 2 - 1 | 4
     graph.createEdge(1, 3, -2);  // 1 - 3 | -2
-    graph.createEdge(2, 3, 3);  // 2 - 3 | 3
+    graph.createEdge(2, 3, 3);   // 2 - 3 | 3
     graph.createEdge(4, 2, -1);  // 4 - 2 | -1
-    graph.createEdge(3, 4, 2);  // 3 - 4 | 2
+    graph.createEdge(3, 4, 2);   // 3 - 4 | 2
 
     // // display as adjacency list
     // /*
@@ -208,8 +209,9 @@ void testDirectGraph() {
     // corregir
     cout << "\nexecFloydWarshall()\n";
     FloydWarshall<char, float> FloydWarshall(graph);
-    Graph<char, float> *dsf = new DirectedGraph<char, float>();
+    Graph<char, float>* dsf = new DirectedGraph<char, float>();
     dsf = FloydWarshall.apply();
+    FloydWarshall.displayresult();
 }
 
 void testUnDirectGraph() {
@@ -243,15 +245,15 @@ void testUnDirectGraph() {
     graph.insertVertex(5, "E");
     graph.insertVertex(6, "F");
     graph.insertVertex(7, "Z");
-    graph.createEdge(1, 3, 3); //A-C
-    graph.createEdge(1, 2, 4); //A-B
-    graph.createEdge(2, 6, 5); //B-F
-    graph.createEdge(2, 5, 12); //B-E
-    graph.createEdge(3, 4, 7); //C-D
-    graph.createEdge(3, 5, 10); //C-E
-    graph.createEdge(4, 5, 2); //D-E
-    graph.createEdge(5, 7, 5); //E-Z
-    graph.createEdge(6, 7, 16); //F-Z
+    graph.createEdge(1, 3, 3);   // A-C
+    graph.createEdge(1, 2, 4);   // A-B
+    graph.createEdge(2, 6, 5);   // B-F
+    graph.createEdge(2, 5, 12);  // B-E
+    graph.createEdge(3, 4, 7);   // C-D
+    graph.createEdge(3, 5, 10);  // C-E
+    graph.createEdge(4, 5, 2);   // D-E
+    graph.createEdge(5, 7, 5);   // E-Z
+    graph.createEdge(6, 7, 16);  // F-Z
 
     // display as adjacency list
     /*
