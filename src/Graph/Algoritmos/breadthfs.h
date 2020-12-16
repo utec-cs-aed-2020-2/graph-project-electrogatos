@@ -54,7 +54,7 @@ class BFS {
 
         while (!queue.empty()) {
             Vertex<TV, TE>* v = queue.front();
-            cout << " Nodo pop queque: " << v->data << endl;
+            // cout << " Nodo pop queque: " << v->data << endl;
             this->rutaBFS.push_back(v->data);
             queue.pop();
 
@@ -62,7 +62,7 @@ class BFS {
             //--> si no ha sido visitado se marca como visitado y encola
             for (auto edg : v->edges) {
                 if (!visited[edg->vertexes[1]]) {
-                    cout << "  Nodo push queque: " << edg->vertexes[1]->data << endl;
+                    // cout << "  Nodo push queque: " << edg->vertexes[1]->data << endl;
                     visited[edg->vertexes[1]] = true;
                     queue.push(edg->vertexes[1]);
                     // Se crea una nueva arista en el nuevo Grafo (Peso no importa)

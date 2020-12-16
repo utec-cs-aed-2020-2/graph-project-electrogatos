@@ -56,7 +56,7 @@ class DFS {
         while (!stack.empty()) {
             // Se saca de la pila el vértice
             Vertex<TV, TE>* v = stack.top();
-            cout << " Nodo pop stack: " << v->data << endl;
+            // cout << " Nodo pop stack: " << v->data << endl;
             this->RecorridoDFS.push_back(v->data);
             stack.pop();
 
@@ -64,7 +64,7 @@ class DFS {
             //--> si no ha sido visitado se marca como visitado y se coloca en la pila
             for (auto edg : v->edges) {
                 if (!visited[edg->vertexes[1]]) {
-                    cout << "  Nodo push stack: " << edg->vertexes[1]->data << endl;
+                    // cout << "  Nodo push stack: " << edg->vertexes[1]->data << endl;
                     visited[edg->vertexes[1]] = true;
                     stack.push(edg->vertexes[1]);
                     // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
