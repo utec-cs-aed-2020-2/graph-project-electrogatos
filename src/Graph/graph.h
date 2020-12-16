@@ -39,6 +39,7 @@ class Graph {
     virtual Vertex<TV, TE>* displayVertex(int id) = 0;
     virtual bool findById(int id) = 0;
     virtual int findByVertex(Vertex<TV, TE>* v) = 0;
+    virtual Vertex<TV, TE>* findByData(TV data) = 0;
     virtual void display() = 0;
     virtual bool searchEdge(int id1, int id2) = 0;
     virtual TE getweigthEdge(int id1, int id2) = 0;
