@@ -8,35 +8,27 @@ void Tester::executeExamples() {
     cout << "================================================" << endl;
     cout << "Test UnDirected Graph" << endl;
     cout << "================================================" << endl;
-    testUnDirectGraph();
+    // testUnDirectGraph(); // General Test
     cout << endl;
+
+    testPrimKruskal_UnDir(); // EXPO (1)
+    // testBFS_DFS_UnDir();
+    testBFS_UnDir(); // EXPO (3)
+    testDijskstra_UnDir(); // EXPO (4)
+    testAstar_UnDir(); // EXPO (6)
 
     cout << "================================================" << endl;
     cout << "Test Directed Graph" << endl;
     cout << "================================================" << endl;
-    testDirectGraph();
+    // testDirectGraph(); // General Test
     cout << endl;
 
-    // for (int j = 0; j < NUMBER_OF_TESTS; ++j) {
-    //     UnDirectedGraph<Data, Data> graph;
+    testDFS_Dir(); // EXPO (2)
+    // testBFS_Dir();
+    testDisjktra_Dir(); // EXPO (5)
+    testFloyWarshal_Dir(); // EXPO (7)
+    testBellmanFord_Dir(); // EXPO (8)
 
-    //     float density =
-    //         2 * float(NUMBER_OF_EDGES) / (float(NUMBER_OF_VERTEXES) * (NUMBER_OF_VERTEXES - 1));
-
-    //     ASSERT(density == graph.density(), "density function has problems");
-
-    //     bool dense = density >= densityThreshold;
-    //     ASSERT(graph.isDense() == dense, "isDense function has problems");
-
-    //     ASSERT(graph.isConnected(), "isConnected function has problems");
-
-    //     ASSERT(graph.isStronglyConnected(), "isStronglyConnected has problems");
-
-    //     testStronglyConnected();
-    //     testKruskal();
-    //     testPrim();
-    //     cout << "All tests passed" << endl;
-    // }
 }
 
 void Tester::executeParser() {
@@ -134,32 +126,6 @@ void testDirectGraph() {
     graph.createEdge(2, 3, 4);// 1-2
     graph.createEdge(2, 4, 4);// 1-3
     graph.createEdge(3, 3, 4);// 3-3
-
-    // // Floyd–Warshall
-    // graph.insertVertex(1, '1');
-    // graph.insertVertex(2, '2');
-    // graph.insertVertex(3, '3');
-    // graph.insertVertex(4, '4');
-    // graph.createEdge(2, 1, 4);   // 2 - 1 | 4
-    // graph.createEdge(1, 3, -2);  // 1 - 3 | -2
-    // graph.createEdge(2, 3, 3);   // 2 - 3 | 3
-    // graph.createEdge(4, 2, -1);  // 4 - 2 | -1
-    // graph.createEdge(3, 4, 2);   // 3 - 4 | 2
-
-    // // Floyd–Warshall
-    // graph.insertVertex(1, '1');
-    // graph.insertVertex(2, '2');
-    // graph.insertVertex(3, '3');
-    // graph.insertVertex(4, '4');
-    // graph.insertVertex(5, '5');
-    // graph.createEdge(2, 1, 3);   // 2 - 1 | 3
-    // graph.createEdge(1, 3, 6);   // 1 - 3 | 6
-    // graph.createEdge(1, 4, 3);   // 1 - 4 | 3
-    // graph.createEdge(3, 4, 2);   // 3 - 4 | 2
-    // graph.createEdge(4, 3, 1);   // 4 - 3 | 1
-    // graph.createEdge(4, 2, 1);   // 4 - 2 | 1
-    // graph.createEdge(5, 2, 4);   // 5 - 2 | 4
-    // graph.createEdge(5, 4, 2);   // 5 - 4 | 2
 
     // display as adjacency list
     /*
