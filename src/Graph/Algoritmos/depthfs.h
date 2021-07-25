@@ -15,13 +15,12 @@ using namespace std;
 template <typename TV, typename TE>
 class DFS {
    public:
-    // UnDirectedGraph<TV, TE> Graph;
     Graph<TV, TE>* Graph;
     ::Graph<TV, TE>* DFSGraph;
     Vertex<TV, TE>* v_init;
     list<TV> RecorridoDFS;
 
-    DFS(::Graph<TV, TE>& Graph, TV init) {  // Tambien funciona para grafo dirigido
+    DFS(::Graph<TV, TE>& Graph, TV init) {
         this->Graph = &Graph;
         if (this->Graph->type == 0) {
             this->DFSGraph = new UnDirectedGraph<TV, TE>();
@@ -56,7 +55,7 @@ class DFS {
         while (!stack.empty()) {
             // Se saca de la pila el vértice
             Vertex<TV, TE>* v = stack.top();
-            // cout << " Nodo pop stack: " << v->data << endl;
+            cout << " Nodo pop stack: " << v->data << endl;
             this->RecorridoDFS.push_back(v->data);
             stack.pop();
 
@@ -64,7 +63,7 @@ class DFS {
             //--> si no ha sido visitado se marca como visitado y se coloca en la pila
             for (auto edg : v->edges) {
                 if (!visited[edg->vertexes[1]]) {
-                    // cout << "  Nodo push stack: " << edg->vertexes[1]->data << endl;
+                    cout << "  Nodo push stack: " << edg->vertexes[1]->data << endl;
                     visited[edg->vertexes[1]] = true;
                     stack.push(edg->vertexes[1]);
                     // Se crea una nueva arista en el nuevo Grafo (Peso no importa)
