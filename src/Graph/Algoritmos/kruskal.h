@@ -57,12 +57,14 @@ class Kruskal {
 
         // Por cada arista en el árbol se aplica una union si es el caso
         for (auto edges_ : this->Graph.graphedges) {
+            cout << edges_->vertexes[0]->data << " -> " << edges_->vertexes[1]->data << endl;
             Edge<TV, TE>* next_edge = edges_;
             int x = ds->Find(vtx[next_edge->vertexes[0]->data]);  // el mismo vertice
             int y = ds->Find(vtx[next_edge->vertexes[1]->data]);  // el destino
 
             // Si tienen diferente parent se realiza la union
             if (x != y) {
+                cout << " Union: (" << x << ", " << y << ")" << endl;
                 ds->Union(x, y);
                 // Se agrega la solución al MST Graph
                 BFSGraph.createEdge(this->Graph.findByVertex(next_edge->vertexes[0]),
