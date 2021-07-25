@@ -68,6 +68,13 @@ class AStar {
         pq.push(make_pair(0, v_init));
         dist[v_init] = 0;
 
+        /* print actual table */
+            cout << "          ";
+            for (auto e : dist) {
+                cout << setw(10) << e.first->data << setw(10); 
+            }
+            cout << endl; /* print actual table */
+
         while (!pq.empty()) {
             // sacas el vertex con menor distancia
             Vertex<TV, TE>* u = pq.top().second;
@@ -89,10 +96,24 @@ class AStar {
                     parent[v] = u;
                 }
             }
+
+            /* print actual table */
+                if (!visited[u]) {
+                    cout << u->data << setw(10);
+                    for (auto e : dist) {
+                        if (e.second == INF) {
+                            cout << setw(10) << "INF" << setw(10);
+                        } else {
+                            cout << setw(10) << e.second << setw(10);
+                        }   
+                    }
+                    cout << endl;
+                }
+                visited[u] = true; /* print actual table */
         }
         cout << "\r";
 
-        // displayParents();
+        displayParents();
         displayPath();
         return dist;
     }
@@ -111,7 +132,7 @@ class AStar {
         }
     }
 
-    void displayparents() {
+    void displayParents() {
         /* print parents */
         cout << "Vertex  "
              << "Parent  " << endl;
