@@ -38,7 +38,7 @@ void Tester::executeParser() {
 
     // AirportParser airportsparse(
     //     "D:\\Documentos\\AED-graph-project-electrogatos\\src\\Parser\\Data\\pe.json");
-    AirportParser airportsparse(
+    AirportParser<string, double> airportsparse(
         "/Users/jamesatachagua/Desktop/Ciclo9/Algoritmos/vscode/proyecto/"
         "graph-project-electrogatos/src/Parser/Data/pe.json");
     cout << endl;
