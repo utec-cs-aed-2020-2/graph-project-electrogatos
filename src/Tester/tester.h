@@ -313,6 +313,9 @@ class Tester {
     static void executeParser();
 
     static void testTSP(){
+        /* Graph from geek for geeks
+         * https://www.geeksforgeeks.org/traveling-salesman-problem-using-branch-and-bound-2/
+         */
         UnDirectedGraph<char, int> graph;
         cout << " ------- Test Travel Salesman Problem unDirected ------- " << endl;
         graph.insertVertex(0, '0');
@@ -334,6 +337,9 @@ class Tester {
     }
 
     static void testTSP_Parser1(){
+        /* Graph from geek for geeks, but as a JSON file
+         * https://www.geeksforgeeks.org/traveling-salesman-problem-using-branch-and-bound-2/
+         */
         cout << " ------- Test Travel Salesman Problem with Parser unDirected Graph ------- " << endl;
         cout << "Reading ejemplo1.json\n";
 
@@ -355,6 +361,9 @@ class Tester {
     }
 
     static void testTSP_Parser2(){
+        /* Graph from youtube, but as a JSON file
+         * https://www.youtube.com/watch?v=1FEP_sNb62k
+         */
         cout << " ------- Test Travel Salesman Problem with Parser Directed Graph ------- " << endl;
         cout << "Reading ejemplo2.json\n";
 
