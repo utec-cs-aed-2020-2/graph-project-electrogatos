@@ -41,3 +41,5 @@ src/Tester/ejm.txt
 src/Graph/Algoritmos/kruskal.h.bk1
 src/main.cpp.bk
 .DS_Store
+.vscode/settings.json
+.vscode/tasks.json
