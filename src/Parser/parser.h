@@ -31,6 +31,13 @@ struct Airport {
     double longitude;
 };
 
+struct Distrit {
+    string id;
+    string name;
+    string city;
+    string country;
+};
+
 class JsonParser {
    protected:
     string jsonPath;
@@ -43,12 +50,13 @@ class JsonParser {
     }
 };
 
+template <typename TV, typename TE>
 class AirportParser : JsonParser {
    public:
     AirportParser(string jsonPath) : JsonParser(jsonPath){};
     unordered_map<int, Airport> airports;
 
-    void uGraphMake(UnDirectedGraph<string, double>& tempGraph) {
+    void uGraphMake(UnDirectedGraph<TV, TE>& tempGraph) {
         // Create Vertexes
         for (auto& element : data) {
             Airport a;
@@ -75,7 +83,8 @@ class AirportParser : JsonParser {
                 try {
                     Airport destination = this->airports.at(stoi(id_dest));
                     double de = calculateDistanceAirports(&origen, &destination);
-                    tempGraph.createEdge(stoi(id_origen), stoi(id_dest), de);
+                    TE dde = de; // convert to TE
+                    tempGraph.createEdge(stoi(id_origen), stoi(id_dest), dde);
                 } catch (const out_of_range& e) {
                     cerr << "Exception at " << e.what() << endl;
                     cerr << "  Destination not found!!!" << endl;
@@ -84,7 +93,7 @@ class AirportParser : JsonParser {
         }
     };
 
-    void dGraphMake(DirectedGraph<string, double>& tempGraph) {
+    void dGraphMake(DirectedGraph<TV, TE>& tempGraph) {
         // Create Vertexes
         for (auto& element : data) {
             Airport a;
@@ -127,6 +136,84 @@ class AirportParser : JsonParser {
                     pow((destination->latitude - origin->latitude), 2.0));
     }
 };
+
+template <typename TV, typename TE>
+class DistritParser : JsonParser {
+   public:
+    DistritParser(string jsonPath) : JsonParser(jsonPath){};
+    unordered_map<int, Distrit> distrits;
+
+    void uGraphMake(UnDirectedGraph<TV, TE>& tempGraph) {
+        // Create Vertexes
+        for (auto& element : data) {
+            Distrit a;
+            a.id = element["Airport ID"];
+            int id_int = stoi(a.id);
+            a.city = element["City"];
+            a.country = element["Country"];
+            a.name = element["Name"];
+
+
+            tempGraph.insertVertex(id_int, a.id);
+            this->distrits[id_int] = a;
+        }
+        // Create Edges
+        for (auto& element : data) {
+            string id_origen = element["Airport ID"];
+            Distrit origen = this->distrits.at(stoi(id_origen));
+
+            for (auto& [key, value] : element["destinations"].items()) {
+                try {
+                    Distrit destination = this->distrits.at(stoi(key));
+                    string id_dest = key;
+                    TE de = 0;
+                    // std::cout << id_origen << " " << key << " : " << value << "\n";
+                    tempGraph.createEdge(stoi(id_origen), stoi(id_dest), value);
+                } catch (const out_of_range& e) {
+                    cerr << "Exception at " << e.what() << endl;
+                    cerr << "  Destination not found!!!" << endl;
+                }
+            }
+        }
+    };
+
+    void dGraphMake(DirectedGraph<TV, TE>& tempGraph) {
+        // Create Vertexes
+        for (auto& element : data) {
+            Distrit a;
+            a.id = element["Airport ID"];
+            int id_int = stoi(a.id);
+            a.city = element["City"];
+            a.country = element["Country"];
+            a.name = element["Name"];
+
+
+            tempGraph.insertVertex(id_int, a.id);
+            this->distrits[id_int] = a;
+        }
+
+        // Create Edges
+        for (auto& element : data) {
+            string id_origen = element["Airport ID"];
+            Distrit origen = this->distrits.at(stoi(id_origen));
+
+            for (auto& [key, value] : element["destinations"].items()) {
+                try {
+                    Distrit destination = this->distrits.at(stoi(key));
+                    string id_dest = key;
+                    TE de = 0;
+                    // std::cout << id_origen << " " << key << " : " << value << "\n";
+                    tempGraph.createEdge(stoi(id_origen), stoi(id_dest), value);
+                } catch (const out_of_range& e) {
+                    cerr << "Exception at " << e.what() << endl;
+                    cerr << "  Destination not found!!!" << endl;
+                }
+            }
+        }
+    };
+
+};
+
 
 class CityParser : JsonParser {
    public:
