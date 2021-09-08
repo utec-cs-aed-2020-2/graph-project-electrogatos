@@ -49,7 +49,12 @@
         "cstring": "cpp",
         "forward_list": "cpp",
         "iomanip": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "complex": "cpp",
+        "concepts": "cpp",
+        "numbers": "cpp"
     },
     "spellright.language": [
         "es"

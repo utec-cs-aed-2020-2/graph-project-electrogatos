@@ -49,7 +49,8 @@
 					"${workspaceFolder}/src/main.cpp",
 					"${workspaceFolder}/src/Tester/*.cpp",
 					"-o",
-					"${workspaceFolder}/build/osx/main.out"
+					"${workspaceFolder}/build/osx/main.out",
+					"-w"
 				]
 			},
 			"linux": {
@@ -63,7 +64,7 @@
 					"${workspaceFolder}/build/lin/main.out"
 				]
 			},
-			"dependsOn": ["OutDir"]
+			// "dependsOn": ["OutDir"]
 		},
 		{
 			"label": "OutDir",
